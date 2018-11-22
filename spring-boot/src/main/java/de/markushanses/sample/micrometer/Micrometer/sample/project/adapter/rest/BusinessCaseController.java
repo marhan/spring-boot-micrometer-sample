@@ -8,11 +8,10 @@ import io.micrometer.core.instrument.MeterRegistry;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@Timed
+//@Timed
 public class BusinessCaseController {
 
 	private final Counter rentApartmentCounter;
@@ -20,22 +19,22 @@ public class BusinessCaseController {
 
 	@Autowired
 	public BusinessCaseController(MeterRegistry registry) {
-		this.rentApartmentCounter = registry.counter("count.apartment.rent.success");
-		this.cancelApartmentCounter = registry.counter("count.apartment.rent.cancel");
+		this.rentApartmentCounter = registry.counter("counter.apartment.rent.success");
+		this.cancelApartmentCounter = registry.counter("counter.apartment.rent.cancel");
 	}
 
-	@GetMapping("/rent-apartment")
+	//@GetMapping("/rent-apartment")
 	//@Timed(extraTags = {"region", "hamburg"})
-	@Timed(value = "time.apartment.rent.success", longTask = true)
+	@Timed(value = "timer.apartment.rent.success", longTask = true)
 	public ResponseEntity<String> rentApartment() {
 		this.rentApartmentCounter.increment();
 		return new ResponseEntity(Clock.systemDefaultZone().millis(), HttpStatus.OK);
 	}
 
 
-	@GetMapping("/cancel-apartment")
+	//@GetMapping("/cancel-apartment")
 	//@Timed(extraTags = {"region", "hamburg"})
-	@Timed(value = "time.apartment.rent.success", longTask = true)
+	@Timed(value = "timer.apartment.rent.success", longTask = true)
 	public ResponseEntity<String> cancelApartment() {
 		this.cancelApartmentCounter.increment();
 		return new ResponseEntity(Clock.systemDefaultZone().millis(), HttpStatus.OK);

@@ -4,8 +4,10 @@ management:
   metrics:
     tags.application: ${spring.application.name}
     export.elastic.enabled: false
-    tags.region: hamburg
-    tags.environment: local
+    tags.region: "hamburg"
+    tags.environment: "local"
+    tags.subdomain: "apartment"
+    tags.programming_language: "java"
   endpoints:
     enabled-by-default: true
     web.exposure.include: '*'
