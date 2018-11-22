@@ -33,22 +33,24 @@ docker-compose up -d --no-deps --build springboot
 
 # Development
 
-## Run in development mode.
+## Run locally
 
 ```bash
-./gradlew bootRun --args='--spring.profiles.active=dev'
+./gradlew bootRun
 ```
 
-## Rebuild spring boot container and start docker compose again
+## Run in docker with dependency
 
 ```bash
-docker-compose stop && ./spring-boot/gradlew clean build && docker-compose up -d --build
+docker-compose stop
+cd spring-boot/ && ./gradlew build && cd ..
+docker-compose up -d --build
 ```
 
 ## Rebuild complete stack
 
 ```bash
-docker-compose stop && ./spring-boot/gradlew clean build && docker-compose up -d --force-recreate --build
+docker-compose stop && docker-compose rm -f -v && cd spring-boot && ./gradlew clean build && cd .. && docker-compose up -d --force-recreate --build
 ```
 
 # Find metrics
@@ -67,3 +69,4 @@ docker rm $(docker ps -a -q)
 # Credits
 
 * [Prometheus, Grafana Setup](https://github.com/vegasbrianc/prometheus)
+* [Micrometer Samples](https://github.com/micrometer-metrics/micrometer/tree/master/samples/micrometer-samples-boot1/src/main/java/io/micrometer/boot1/samples)

@@ -1,7 +1,11 @@
 spring.application.name: springboot-micrometer-sample
 
 management:
-  metrics.tags.application: ${spring.application.name}
+  metrics:
+    tags.application: ${spring.application.name}
+    export.elastic.enabled: false
+    tags.region: hamburg
+    tags.environment: local
   endpoints:
     enabled-by-default: true
     web.exposure.include: '*'

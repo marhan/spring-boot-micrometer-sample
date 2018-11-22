@@ -3,6 +3,8 @@ version: '3.1'
 volumes:
   prometheus_data: {}
   grafana_data: {}
+  elasticsearch_data: {}
+  kibana_data: {}
 
 networks:
   monitoring:
@@ -10,16 +12,51 @@ networks:
 
 services:
 
+  elasticsearch:
+    build:
+      context: ./elastic/elasticsearch/
+    volumes:
+      - ./elastic/elasticsearch/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml:ro
+      - elasticsearch_data:/usr/share/elasticsearch/data
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    environment:
+      - cluster.name=mircometer-cluster
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    networks:
+      - monitoring
+
+  kibana:
+    build:
+      context: ./elastic/kibana/
+    volumes:
+      - ./elastic/kibana/kibana.yml/:/usr/share/kibana/config/kibana.yml:ro
+    ports:
+      - "5601:5601"
+    networks:
+      - monitoring
+    depends_on:
+      - elasticsearch
+
   springboot:
     volumes:
-      - ./spring-boot/build/libs/spring-boot-micrometer-1.jar:/usr/src/micrometer/spring-boot-micrometer-1.jar
+      - ./spring-boot/build/libs/spring-boot-micrometer-1.jar:/usr/src/micrometer/spring-boot-micrometer-1.jar:ro
     build:
       context: ./spring-boot
-      dockerfile: Dockerfile
+    depends_on:
+      - elasticsearch
     image: springboot-micrometer
     ports:
       - 8090:8080
     command: "java -jar spring-boot-micrometer-1.jar"
+    environment:
+      - "SPRING_PROFILES_ACTIVE=docker"
     networks:
       - monitoring
     restart: always
@@ -56,3 +93,5 @@ services:
     networks:
       - monitoring
     restart: always
+
+
