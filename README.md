@@ -43,7 +43,12 @@ docker-compose up -d --no-deps --build springboot
 
 ```bash
 docker-compose stop && ./spring-boot/gradlew clean build && docker-compose up -d --build
-#docker-compose up -d --no-deps --build springboot
+```
+
+## Rebuild complete stack
+
+```bash
+docker-compose stop && ./spring-boot/gradlew clean build && docker-compose up -d --force-recreate --build
 ```
 
 # Find metrics
