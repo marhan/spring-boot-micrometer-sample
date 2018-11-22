@@ -1,2 +1,3 @@
 management.endpoints:
+  enabled-by-default: true
   web.exposure.include: '*'

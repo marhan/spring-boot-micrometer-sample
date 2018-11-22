@@ -32,7 +32,7 @@ dependencies {
     implementation('org.springframework.boot:spring-boot-starter-web')
     //implementation('io.micrometer:micrometer-core:1.1.0')
     implementation('io.micrometer:micrometer-registry-prometheus:1.1.0')
-    implementation('io.dropwizard.metrics:metrics-core:4.0.3')
+    //implementation('io.dropwizard.metrics:metrics-core:4.0.3')
 
     runtimeOnly('org.springframework.boot:spring-boot-devtools')
     //runtimeOnly('com.h2database:h2')
