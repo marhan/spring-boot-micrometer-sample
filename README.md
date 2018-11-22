@@ -39,10 +39,11 @@ docker-compose up -d --no-deps --build springboot
 ./gradlew bootRun --args='--spring.profiles.active=dev'
 ```
 
-## Rebuild container while docker container are running
+## Rebuild spring boot container and start docker compose again
 
 ```bash
-docker-compose up -d --no-deps --build springboot
+docker-compose stop && ./spring-boot/gradlew clean build && docker-compose up -d --build
+#docker-compose up -d --no-deps --build springboot
 ```
 
 # Find metrics

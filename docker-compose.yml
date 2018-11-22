@@ -19,6 +19,7 @@ services:
     image: springboot-micrometer
     ports:
       - 8090:8080
+    command: "java -jar spring-boot-micrometer-1.jar"
     networks:
       - monitoring
     restart: always

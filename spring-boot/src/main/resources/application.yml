@@ -1,6 +1,11 @@
-management.endpoints:
-  enabled-by-default: true
-  web.exposure.include: '*'
+spring.application.name: springboot-micrometer-sample
+
+management:
+  metrics.tags.application: ${spring.application.name}
+  endpoints:
+    enabled-by-default: true
+    web.exposure.include: '*'
 
 endpoints:
   prometheus.sensitive: false
+
