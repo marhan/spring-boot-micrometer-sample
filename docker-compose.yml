@@ -6,13 +6,27 @@ volumes:
 
 networks:
   monitoring:
+    driver: bridge
 
 services:
+
+  springboot:
+    volumes:
+      - ./spring-boot/build/libs/spring-boot-micrometer-1.jar:/usr/src/micrometer/spring-boot-micrometer-1.jar
+    build:
+      context: ./spring-boot
+      dockerfile: Dockerfile
+    image: springboot-micrometer
+    ports:
+      - 8090:8080
+    networks:
+      - monitoring
+    restart: always
 
   prometheus:
     image: prom/prometheus:v2.1.0
     volumes:
-      - ./prometheus_config:/etc/prometheus/
+      - ./prometheus/prometheus_config:/etc/prometheus/
       - prometheus_data:/prometheus
     command:
       - '--config.file=/etc/prometheus/prometheus.yml'
@@ -21,6 +35,8 @@ services:
       - '--web.console.templates=/usr/share/prometheus/consoles'
     ports:
       - 9090:9090
+    depends_on:
+      - springboot
     networks:
       - monitoring
     restart: always
@@ -33,9 +49,9 @@ services:
       - 3000:3000
     volumes:
       - grafana_data:/var/lib/grafana
-      - ./grafana_config/provisioning/:/etc/grafana/provisioning/
+      - ./prometheus/grafana_config/provisioning/:/etc/grafana/provisioning/
     env_file:
-      - ./grafana_config/config.monitoring
+      - ./prometheus/grafana_config/config.monitoring
     networks:
       - monitoring
     restart: always

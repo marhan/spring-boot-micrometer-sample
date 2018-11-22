@@ -13,13 +13,23 @@
 
 Go into subdirectory 'spring-boot'.
 
-# Build
+
+# Start monitoring
+
+## Build spring boot application
 
 ```bash
-./gradlew test
+./gradlew clean build
 ```
 
-# Start
+# Start docker stack
+
+```bash
+docker-compose up
+
+# rebuild springboot only
+docker-compose up -d --no-deps --build springboot
+```
 
 # Development
 
@@ -29,6 +39,25 @@ Go into subdirectory 'spring-boot'.
 ./gradlew bootRun --args='--spring.profiles.active=dev'
 ```
 
+## Rebuild container while docker container are running
+
+```bash
+docker-compose up -d --no-deps --build springboot
+```
+
 # Find metrics
 
 * [Actuators of your application](http://localhost:8080/actuator)
+
+
+# Stop and remove all Containers
+
+```bash
+docker stop $(docker ps -a -q)
+docker rm $(docker ps -a -q)
+```
+
+
+# Credits
+
+* [Prometheus, Grafana Setup](https://github.com/vegasbrianc/prometheus)
