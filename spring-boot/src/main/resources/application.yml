@@ -1,5 +1,9 @@
 spring.application.name: springboot-micrometer-sample
 
+logging:
+  level:
+    io.micrometer: DEBUG
+
 management:
   metrics:
     tags.application: ${spring.application.name}

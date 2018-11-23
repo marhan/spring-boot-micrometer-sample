@@ -11,24 +11,22 @@
 
 # Spring Boot application
 
-Go into subdirectory 'spring-boot'.
+Requirements: JDK 10 (Gradle has an issue with JDK 11)
 
+Find project in directory 'spring-boot'.
 
 # Start monitoring
 
 ## Build spring boot application
 
 ```bash
-./gradlew clean build
+./gradlew build
 ```
 
 # Start docker stack
 
 ```bash
 docker-compose up
-
-# rebuild springboot only
-docker-compose up -d --no-deps --build springboot
 ```
 
 # Development
@@ -42,9 +40,7 @@ docker-compose up -d --no-deps --build springboot
 ## Run in docker with dependency
 
 ```bash
-docker-compose stop
-cd spring-boot/ && ./gradlew build && cd ..
-docker-compose up -d --build
+docker-compose stop && cd spring-boot/ && ./gradlew build && cd .. && docker-compose up -d --build
 ```
 
 ## Rebuild complete stack
@@ -57,12 +53,28 @@ docker-compose stop && docker-compose rm -f -v && cd spring-boot && ./gradlew cl
 
 * [Actuators of your application](http://localhost:8080/actuator)
 
+# Stop docker instances and destroy volumes
+
+```bash
+docker-compose down -v
+```
+
 
 # Stop and remove all Containers
 
 ```bash
 docker stop $(docker ps -a -q)
 docker rm $(docker ps -a -q)
+```
+
+# Remove docker volumes
+
+```bash
+docker volume remove spring-boot-micrometer-sample_elasticsearch_data
+docker volume remove spring-boot-micrometer-sample_grafana_data
+docker volume remove spring-boot-micrometer-sample_prometheus_data
+docker volume remove spring-boot-micrometer-sample_kibana_data
+
 ```
 
 

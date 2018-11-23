@@ -3,7 +3,8 @@ management:
     export:
       elastic:
         enabled: true
-        host: http://elasticsearch:9300
-        index: micrometer-metrics
+        host: "http://elasticsearch:9200"
+        index: "micrometer-metrics"
         step: 5s
-    tags.environment: docker_on_markus_mac
+        batch-size: 5
+    tags.environment: "docker_on_markus_mac"

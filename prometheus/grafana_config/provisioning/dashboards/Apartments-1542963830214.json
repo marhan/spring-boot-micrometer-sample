@@ -15,7 +15,6 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "id": 8,
   "links": [],
   "panels": [
     {
@@ -79,7 +78,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "count_apartment_rent_success_total{job=\"springboot\"}",
+          "expr": "counter_apartment_rent_success_total{job=\"springboot\"}",
           "format": "time_series",
           "intervalFactor": 1,
           "refId": "A"
@@ -138,5 +137,5 @@
   "timezone": "",
   "title": "Apartments",
   "uid": "O-O-ERYiz",
-  "version": 1
+  "version": 2
 }
