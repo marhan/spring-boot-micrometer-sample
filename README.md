@@ -29,7 +29,7 @@ This script will build the Spring Boot project via **Gradle** and build the whol
 cd spring-boot
 ./gradlew clean bootRun -Denvironment=local
 ```
-The monitoring systems are not connected, if the app is running locally.   
+The monitoring systems are not connected, if the app runs locally.   
 
 # Find metrics
 
