@@ -34,7 +34,7 @@ docker-compose up
 ## Run locally
 
 ```bash
-./gradlew bootRun
+./gradlew clean bootRun -Denvironment=local
 ```
 
 ## Run in docker with dependency
@@ -53,10 +53,10 @@ docker-compose stop && docker-compose rm -f -v && cd spring-boot && ./gradlew cl
 
 * [Actuators of your application](http://localhost:8080/actuator)
 
-# Stop docker instances and destroy volumes
+# Stop docker instances and destroy 
 
 ```bash
-docker-compose down -v
+docker-compose stop && docker-compose rm -f -v
 ```
 
 

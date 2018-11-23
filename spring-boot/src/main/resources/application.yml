@@ -10,7 +10,7 @@ management:
     export.elastic.enabled: false
     tags.region: "hamburg"
     tags.environment: "local"
-    tags.subdomain: "apartment"
+    tags.subdomain: "object"
     tags.programming_language: "java"
   endpoints:
     enabled-by-default: true
