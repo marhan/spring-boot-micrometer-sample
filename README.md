@@ -2,6 +2,8 @@
 
 This project is meant as sandbox for experiments and sample implementation for Spring Boot 2 with Micrometer.
 
+The state of this repository is still **work in progress**, but should run without issues.
+
 # Introductions
 
 * [Concepts of Micrometer](https://micrometer.io/docs/concepts)
@@ -50,6 +52,8 @@ docker volume remove spring-boot-micrometer-sample_kibana_data
 
 # TODO
 * Spring Integration tests
+* Build and test with Travis-CI
 * Spring Boot Dev Tools
 * Timer Meter 
 * Send metrics to InfluxDB
+* Upgrade to JDK 11 (depends on Gradle upgrade)
