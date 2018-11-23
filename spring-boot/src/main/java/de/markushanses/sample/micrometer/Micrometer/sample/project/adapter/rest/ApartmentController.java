@@ -1,11 +1,14 @@
 package de.markushanses.sample.micrometer.Micrometer.sample.project.adapter.rest;
 
 import java.time.Clock;
+import java.util.Random;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import io.micrometer.core.instrument.Counter;
 import io.micrometer.core.instrument.MeterRegistry;
 import io.micrometer.core.instrument.Tags;
+import io.micrometer.core.instrument.Timer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +25,8 @@ public class ApartmentController {
 	private final Counter startRentCounter;
 	private final Counter cancelCounter;
 	private final AtomicInteger rentProgress;
+	private final Timer rentTimer;
+	private final Random random;
 
 	@Autowired
 	public ApartmentController(MeterRegistry registry) {
@@ -29,6 +34,8 @@ public class ApartmentController {
 		this.rentSuccessCounter = registry.counter("counter.apartment.rent.success", "object_type", "apartment", "rent_process_state", "success");
 		this.cancelCounter = registry.counter("counter.apartment.rent.cancel", "object_type", "apartment", "rent_process_state", "aborted");
 		this.rentProgress = registry.gauge("gauge.apartment.rent.progress", Tags.of("object_type", "apartment", "rent_process_state", "ongoing"), new AtomicInteger(0));
+		this.rentTimer = Timer.builder("timer.apartment.rent").publishPercentileHistogram().register(registry);
+		this.random = new Random();
 	}
 
 	@GetMapping("/start-rent-apartment/{apartmentNumber}")
@@ -57,5 +64,15 @@ public class ApartmentController {
 		cancelCounter.increment();
 		rentProgress.decrementAndGet();
 		return new ResponseEntity("Apartment rent aborted ID: " + String.valueOf(Clock.systemDefaultZone().millis()), HttpStatus.OK);
+	}
+
+	@GetMapping("/delay/{delayInSeconds}")
+	public ResponseEntity<String> abortRentApartment(@PathVariable Long delayInSeconds) {
+		rentTimer.record(simulatedLatency(delayInSeconds), TimeUnit.SECONDS);
+		return new ResponseEntity("Apartment delay ID: " + String.valueOf(Clock.systemDefaultZone().millis()), HttpStatus.OK);
+	}
+
+	private long simulatedLatency(long center) {
+		return (long) (random.nextGaussian() * 10) + center;
 	}
 }
