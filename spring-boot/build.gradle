@@ -17,8 +17,8 @@ apply plugin: 'io.spring.dependency-management'
 
 group = 'de.markushanses.sample.micrometer'
 version = '1'
-targetCompatibility = '10'
-sourceCompatibility = '10'
+targetCompatibility = '11'
+sourceCompatibility = '11'
 
 repositories {
     mavenCentral()
