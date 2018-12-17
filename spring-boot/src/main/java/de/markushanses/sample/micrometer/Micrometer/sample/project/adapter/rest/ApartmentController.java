@@ -18,7 +18,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
 @RestController
-@RequestMapping(value = "apartment")
+@RequestMapping(value = "api/apartment")
 public class ApartmentController {
 
     private final Counter rentSuccessCounter;
