@@ -11,7 +11,7 @@ The state of this repository is still **work in progress**, but should run witho
 
 # Spring Boot application
 
-Requirements: JDK 10 (Gradle has an issue with JDK 11)
+Requirements: JDK 10 or higher
 
 # Start Monitoring
 
@@ -51,9 +51,9 @@ docker volume remove spring-boot-micrometer-sample_kibana_data
 * [Micrometer Samples](https://github.com/micrometer-metrics/micrometer/tree/master/samples/micrometer-samples-boot1/src/main/java/io/micrometer/boot1/samples)
 
 # TODO
+* Frontend implementation with vue.js
 * Spring Integration tests
 * Build and test with Travis-CI
 * Spring Boot Dev Tools
 * Timer Meter 
 * Send metrics to InfluxDB
-* Upgrade to JDK 11 (depends on Gradle upgrade)
