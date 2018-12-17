@@ -37,3 +37,7 @@ npm run test:unit
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
+
+## Credits
+
+* [Bootstrap Vue.js](https://bootstrap-vue.js.org/)
