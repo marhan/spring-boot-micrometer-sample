@@ -49,6 +49,7 @@ docker volume remove spring-boot-micrometer-sample_kibana_data
 
 * [Prometheus, Grafana Setup](https://github.com/vegasbrianc/prometheus)
 * [Micrometer Samples](https://github.com/micrometer-metrics/micrometer/tree/master/samples/micrometer-samples-boot1/src/main/java/io/micrometer/boot1/samples)
+* [Spring Boot with Vue.js](https://github.com/jonashackt/spring-boot-vuejs)
 
 # TODO
 * Frontend implementation with vue.js
