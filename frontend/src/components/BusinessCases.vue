@@ -28,7 +28,7 @@
         methods: {
             // Fetches posts when the component is created.
             callRestService () {
-                AXIOS.get(`/hello`)
+                AXIOS.get(`/apartment/start-rent-apartment/1`)
                     .then(response => {
                         // JSON responses are automatically parsed.
                         this.response = response.data
