@@ -41,3 +41,4 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 ## Credits
 
 * [Bootstrap Vue.js](https://bootstrap-vue.js.org/)
+* [Spring Boot with Vue.js](https://github.com/jonashackt/spring-boot-vuejs)
