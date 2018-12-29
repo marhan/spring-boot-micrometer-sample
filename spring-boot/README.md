@@ -8,7 +8,7 @@ Requirements: JDK 11
 
 ```bash
 cd spring-boot
-./gradlew clean bootRun -Denvironment=local
+./gradlew bootRun --args='--spring.profiles.active=local'
 ```
 The monitoring systems are not connected, if the app runs locally.   
 
