@@ -1,21 +1,21 @@
 <template>
     <b-container>
         <div class="BusinessCases">
-            <div style="margin-top: 2rem; padding-bottom: 1rem;"><h1>Apartment rents</h1></div>
+            <div style="margin-top: 2rem; padding-bottom: 1rem;"><h1>Apartments</h1></div>
             <b-row>
-                <b-col cols="2">
-                    <b-button @click="callStartRentApartmentService()" variant="outline-primary">Start a rent
+                <b-col cols="3">
+                    <b-button @click="callReserveApartmentService()" variant="outline-primary">Reserve an apartment
                     </b-button>
                 </b-col>
                 <b-col>
-                    <b-alert :show="showStartRentApartmentServiceError===false && results.length > 0"
+                    <b-alert :show="showReserveApartmentServiceError===false && results.length > 0"
                              variant="success">
                         <h4>Success</h4>
                         <hr>
                         <p class="mb-0">{{ results }}</p>
                     </b-alert>
-                    <b-alert :show="showStartRentApartmentServiceError"
-                             @dismissed="showStartRentApartmentServiceError=false"
+                    <b-alert :show="showReserveApartmentServiceError"
+                             @dismissed="showReserveApartmentServiceError=false"
                              dismissible
                              v-for="error in errors" :key="error"
                              variant="danger">
@@ -27,7 +27,7 @@
             </b-row>
             <div class="row">
                 <div style="padding: 1rem;">
-                    <button @click="callStartRentApartmentService()" type="button" class="btn btn-primary"
+                    <button @click="callReserveApartmentService()" type="button" class="btn btn-primary"
                             style="margin-bottom: 1rem; margin-right: 1rem;">Start a rent
                     </button>
                     <button type="button" class="btn btn-warning" style="margin-bottom: 1rem; margin-right: 1rem;">Abort a rent
@@ -55,13 +55,13 @@
             return {
                 results: [],
                 errors: [],
-                showStartRentApartmentServiceError: false,
+                showReserveApartmentServiceError: false,
             }
         },
 
         methods: {
             // Fetches posts when the component is created.
-            callStartRentApartmentService() {
+            callReserveApartmentService() {
 
                 AXIOS.get(`/apartment/start-rent-apartment/1`)
                     .then(response => {
@@ -72,7 +72,7 @@
                     .catch(error => {
                         this.errors = [];
                         this.errors.push(error.message);
-                        this.showStartRentApartmentServiceError = true;
+                        this.showReserveApartmentServiceError = true;
                     })
             }
         }
