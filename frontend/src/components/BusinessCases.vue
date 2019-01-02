@@ -25,8 +25,9 @@
                 </b-alert>
             </b-col>
         </b-row>
+        <hr>
         <!-- confirm -->
-        <b-row>
+        <b-row style="margin-top: 2rem; padding-bottom: 1rem;">
             <b-col cols="3">
                 <b-button @click="callConfirmApartmentRentService()" variant="outline-success">Confirm apartment rent
                 </b-button>
@@ -42,6 +43,31 @@
                          @dismissed="showConfirmApartmentRentServiceError=false"
                          dismissible
                          v-for="error in confirmApartmentRentErrors" :key="error"
+                         variant="danger">
+                    <h4>Error</h4>
+                    <hr>
+                    <p class="mb-0">{{ error }}</p>
+                </b-alert>
+            </b-col>
+        </b-row>
+        <hr>
+        <!-- cancel -->
+        <b-row style="margin-top: 2rem; padding-bottom: 1rem;">
+            <b-col cols="3">
+                <b-button @click="callCancelApartmentRentService()" variant="outline-warning">Cancel apartment rent
+                </b-button>
+            </b-col>
+            <b-col>
+                <b-alert :show="showCancelApartmentRentServiceError===false && cancelApartmentRentResults.length > 0"
+                         variant="success">
+                    <h4>Rent successful cancelled</h4>
+                    <hr>
+                    <p class="mb-0">{{ cancelApartmentRentResults }}</p>
+                </b-alert>
+                <b-alert :show="showCancelApartmentRentServiceError"
+                         @dismissed="showCancelApartmentRentServiceError=false"
+                         dismissible
+                         v-for="error in cancelApartmentRentErrors" :key="error"
                          variant="danger">
                     <h4>Error</h4>
                     <hr>
@@ -69,7 +95,10 @@
                 showReserveApartmentServiceError: false,
                 confirmApartmentRentResults: [],
                 confirmApartmentRentErrors: [],
-                showConfirmApartmentRentServiceError: false
+                showConfirmApartmentRentServiceError: false,
+                cancelApartmentRentResults: [],
+                cancelApartmentRentErrors: [],
+                showCancelApartmentRentServiceError: false
             }
         },
 
@@ -101,9 +130,21 @@
                         this.confirmApartmentRentErrors.push(error.message);
                         this.showConfirmApartmentRentServiceError = true;
                     })
+            },
+            callCancelApartmentRentService() {
+                AXIOS.get(`/apartment/cancel-apartment-rent/1`)
+                    .then(response => {
+                        // JSON responses are automatically parsed.
+                        this.cancelApartmentRentResults = response.data;
+
+                    })
+                    .catch(error => {
+                        this.cancelApartmentRentErrors = [];
+                        this.cancelApartmentRentErrors.push(error.message);
+                        this.showCancelApartmentRentServiceError = true;
+                    })
             }
         }
     }
-
 
 </script>

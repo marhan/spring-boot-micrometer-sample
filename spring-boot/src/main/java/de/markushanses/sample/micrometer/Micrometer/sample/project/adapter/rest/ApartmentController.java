@@ -59,15 +59,18 @@ public class ApartmentController {
     }
 
 
-    @GetMapping("/abort-rent-apartment")
-    public ResponseEntity<String> abortRentApartment() {
+    @GetMapping("/cancel-apartment-rent/{apartmentNumber}")
+    public ResponseEntity<String> cancelRentApartment(@PathVariable Long apartmentNumber) {
+        if (apartmentNumber == 2l) {
+            throw new ApartmentNotFoundException("No apartment found");
+        }
         cancelCounter.increment();
         rentProgress.decrementAndGet();
         return new ResponseEntity("Apartment rent aborted ID: " + Clock.systemDefaultZone().millis(), HttpStatus.OK);
     }
 
     @GetMapping("/delay/{delayInSeconds}")
-    public ResponseEntity<String> abortRentApartment(@PathVariable Long delayInSeconds) {
+    public ResponseEntity<String> cancelRentApartmentWithDelay(@PathVariable Long delayInSeconds) {
         rentTimer.record(simulatedLatency(delayInSeconds), TimeUnit.SECONDS);
         return new ResponseEntity("Apartment delay ID: " + Clock.systemDefaultZone().millis(), HttpStatus.OK);
     }
