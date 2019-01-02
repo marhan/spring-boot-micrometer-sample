@@ -4,7 +4,7 @@
 
             <b-navbar-toggle target="nav_collapse"></b-navbar-toggle>
 
-            <b-navbar-brand :to="{ path: '/' }">Micrometer Sample App</b-navbar-brand>
+            <b-navbar-brand :to="{ path: '/' }">{{ appName }}</b-navbar-brand>
 
             <b-collapse is-nav id="nav_collapse">
 
@@ -42,6 +42,15 @@
 </template>
 <script>
     export default {
-        name: 'app'
+        name: 'app',
+
+        data() {
+            return {
+                appName: '',
+            }
+        },
+        created: function () {
+            this.appName = process.env.VUE_APP_TITLE;
+        }
     }
 </script>

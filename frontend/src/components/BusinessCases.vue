@@ -81,8 +81,8 @@
 <script>
     /*eslint no-console: "error"*/
 
-    // import axios from 'axios'
-    import {AXIOS} from './http-common'
+    import Axios from 'axios'
+    Axios.defaults.baseURL = process.env.VUE_APP_SERVICE_URL;
 
     export default {
 
@@ -101,12 +101,11 @@
                 showCancelApartmentRentServiceError: false
             }
         },
-
         methods: {
             // Fetches posts when the component is created.
             callReserveApartmentService() {
 
-                AXIOS.get(`/apartment/reserve-apartment/1`)
+                Axios.get(`/apartment/reserve-apartment/1`)
                     .then(response => {
                         // JSON responses are automatically parsed.
                         this.reserveApartmentResults = response.data;
@@ -119,7 +118,7 @@
                     })
             },
             callConfirmApartmentRentService() {
-                AXIOS.get(`/apartment/confirm-apartment-rent/1`)
+                Axios.get(`/apartment/confirm-apartment-rent/1`)
                     .then(response => {
                         // JSON responses are automatically parsed.
                         this.confirmApartmentRentResults = response.data;
@@ -132,7 +131,7 @@
                     })
             },
             callCancelApartmentRentService() {
-                AXIOS.get(`/apartment/cancel-apartment-rent/1`)
+                Axios.get(`/apartment/cancel-apartment-rent/1`)
                     .then(response => {
                         // JSON responses are automatically parsed.
                         this.cancelApartmentRentResults = response.data;
