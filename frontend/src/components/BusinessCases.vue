@@ -1,43 +1,54 @@
 <template>
     <b-container>
-        <div class="BusinessCases">
-            <div style="margin-top: 2rem; padding-bottom: 1rem;"><h1>Apartments</h1></div>
-            <b-row>
-                <b-col cols="3">
-                    <b-button @click="callReserveApartmentService()" variant="outline-primary">Reserve an apartment
-                    </b-button>
-                </b-col>
-                <b-col>
-                    <b-alert :show="showReserveApartmentServiceError===false && results.length > 0"
-                             variant="success">
-                        <h4>Success</h4>
-                        <hr>
-                        <p class="mb-0">{{ results }}</p>
-                    </b-alert>
-                    <b-alert :show="showReserveApartmentServiceError"
-                             @dismissed="showReserveApartmentServiceError=false"
-                             dismissible
-                             v-for="error in errors" :key="error"
-                             variant="danger">
-                        <h4>Error</h4>
-                        <hr>
-                        <p class="mb-0">{{ error }}</p>
-                    </b-alert>
-                </b-col>
-            </b-row>
-            <div class="row">
-                <div style="padding: 1rem;">
-                    <button @click="callReserveApartmentService()" type="button" class="btn btn-primary"
-                            style="margin-bottom: 1rem; margin-right: 1rem;">Start a rent
-                    </button>
-                    <button type="button" class="btn btn-warning" style="margin-bottom: 1rem; margin-right: 1rem;">Abort a rent
-                    </button>
-                    <button type="button" class="btn btn-success" style="margin-bottom: 1rem; margin-right: 1rem;">
-                        Confirm a rent
-                    </button>
-                </div>
-            </div>
-        </div>
+        <div style="margin-top: 2rem; padding-bottom: 1rem;"><h1>Apartments</h1></div>
+        <!-- reserve -->
+        <b-row style="margin-top: 1rem; padding-bottom: 1rem;">
+            <b-col cols="3">
+                <b-button @click="callReserveApartmentService()" variant="outline-primary">Reserve an apartment
+                </b-button>
+            </b-col>
+            <b-col>
+                <b-alert :show="showReserveApartmentServiceError===false && reserveApartmentResults.length > 0"
+                         variant="success">
+                    <h4>Successful reserved</h4>
+                    <hr>
+                    <p class="mb-0">{{ reserveApartmentResults }}</p>
+                </b-alert>
+                <b-alert :show="showReserveApartmentServiceError"
+                         @dismissed="showReserveApartmentServiceError=false"
+                         dismissible
+                         v-for="error in reserveApartmentErrors" :key="error"
+                         variant="danger">
+                    <h4>Error</h4>
+                    <hr>
+                    <p class="mb-0">{{ error }}</p>
+                </b-alert>
+            </b-col>
+        </b-row>
+        <!-- confirm -->
+        <b-row>
+            <b-col cols="3">
+                <b-button @click="callConfirmApartmentRentService()" variant="outline-success">Confirm apartment rent
+                </b-button>
+            </b-col>
+            <b-col>
+                <b-alert :show="showConfirmApartmentRentServiceError===false && confirmApartmentRentResults.length > 0"
+                         variant="success">
+                    <h4>Rent successful started</h4>
+                    <hr>
+                    <p class="mb-0">{{ confirmApartmentRentResults }}</p>
+                </b-alert>
+                <b-alert :show="showConfirmApartmentRentServiceError"
+                         @dismissed="showConfirmApartmentRentServiceError=false"
+                         dismissible
+                         v-for="error in confirmApartmentRentErrors" :key="error"
+                         variant="danger">
+                    <h4>Error</h4>
+                    <hr>
+                    <p class="mb-0">{{ error }}</p>
+                </b-alert>
+            </b-col>
+        </b-row>
     </b-container>
 </template>
 
@@ -53,9 +64,12 @@
 
         data() {
             return {
-                results: [],
-                errors: [],
+                reserveApartmentResults: [],
+                reserveApartmentErrors: [],
                 showReserveApartmentServiceError: false,
+                confirmApartmentRentResults: [],
+                confirmApartmentRentErrors: [],
+                showConfirmApartmentRentServiceError: false
             }
         },
 
@@ -63,16 +77,29 @@
             // Fetches posts when the component is created.
             callReserveApartmentService() {
 
-                AXIOS.get(`/apartment/start-rent-apartment/1`)
+                AXIOS.get(`/apartment/reserve-apartment/1`)
                     .then(response => {
                         // JSON responses are automatically parsed.
-                        this.results = response.data;
+                        this.reserveApartmentResults = response.data;
 
                     })
                     .catch(error => {
-                        this.errors = [];
-                        this.errors.push(error.message);
+                        this.reserveApartmentErrors = [];
+                        this.reserveApartmentErrors.push(error.message);
                         this.showReserveApartmentServiceError = true;
+                    })
+            },
+            callConfirmApartmentRentService() {
+                AXIOS.get(`/apartment/confirm-apartment-rent/1`)
+                    .then(response => {
+                        // JSON responses are automatically parsed.
+                        this.confirmApartmentRentResults = response.data;
+
+                    })
+                    .catch(error => {
+                        this.confirmApartmentRentErrors = [];
+                        this.confirmApartmentRentErrors.push(error.message);
+                        this.showConfirmApartmentRentServiceError = true;
                     })
             }
         }

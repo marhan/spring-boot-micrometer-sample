@@ -38,7 +38,7 @@ public class ApartmentController {
         this.random = new Random();
     }
 
-    @GetMapping("/start-rent-apartment/{apartmentNumber}")
+    @GetMapping("/reserve-apartment/{apartmentNumber}")
     public ResponseEntity<String> startRentApartment(@PathVariable Long apartmentNumber) {
         if (apartmentNumber == 2l) {
             throw new ApartmentNotFoundException("No apartment found");
@@ -48,7 +48,7 @@ public class ApartmentController {
         return new ResponseEntity("Apartment start rent ID: " + Clock.systemDefaultZone().millis(), HttpStatus.OK);
     }
 
-    @GetMapping("/rent-apartment/{apartmentNumber}")
+    @GetMapping("/confirm-apartment-rent/{apartmentNumber}")
     public ResponseEntity<String> rentApartment(@PathVariable Long apartmentNumber) {
         if (apartmentNumber == 2l) {
             throw new ApartmentNotFoundException("No apartment found");
