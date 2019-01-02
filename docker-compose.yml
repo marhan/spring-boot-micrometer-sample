@@ -61,9 +61,7 @@ services:
       - monitoring
     restart: always
 
-  frontend:
-    volumes:
-      - ./frontend:/usr/src/frontend:rw
+  frontend:    
     build:
       context: ./frontend
     depends_on:
@@ -71,7 +69,6 @@ services:
     image: frontend-micrometer
     ports:
       - 8091:8080
-    command: "npm run serve"    
     networks:
       - monitoring
     restart: always

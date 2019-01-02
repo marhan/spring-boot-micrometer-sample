@@ -4,6 +4,11 @@ This project is meant as sandbox for experiments and sample implementation for S
 
 The state of this repository is still **work in progress**, but should run without issues.
 
+# Requirements
+
+* Java JDK 11
+* Docker (RAM 4 GB min.)
+
 # Introductions
 
 * [Concepts of Micrometer](https://micrometer.io/docs/concepts)
@@ -17,7 +22,7 @@ The state of this repository is still **work in progress**, but should run witho
 
 This script will build the Spring Boot project via **Gradle** and build the whole docker environment via **Docker Compose**.
 
-# Stop and destroy all containers with its volumes 
+# Stop and destroy all containers with its volumes manually
 
 ```bash
 docker-compose stop && docker-compose rm -f -v
@@ -34,8 +39,10 @@ docker volume remove spring-boot-micrometer-sample_kibana_data
 
 # TODO
 * Frontend implementation with vue.js
+* Build Spring Boot application within docker container
+* Timer Meter 
+* Latency via Chaos Monkey
 * Spring Integration tests
 * Build and test with Travis-CI
 * Spring Boot Dev Tools
-* Timer Meter 
 * Send metrics to InfluxDB
