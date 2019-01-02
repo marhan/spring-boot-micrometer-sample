@@ -61,6 +61,21 @@ services:
       - monitoring
     restart: always
 
+  frontend:
+    volumes:
+      - ./frontend:/usr/src/frontend:rw
+    build:
+      context: ./frontend
+    depends_on:
+      - springboot
+    image: frontend-micrometer
+    ports:
+      - 8091:8080
+    command: "npm run serve"    
+    networks:
+      - monitoring
+    restart: always
+
   prometheus:
     image: prom/prometheus:v2.1.0
     volumes:
