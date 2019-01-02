@@ -39,7 +39,6 @@ docker volume remove spring-boot-micrometer-sample_kibana_data
 
 # TODO
 * Frontend implementation with vue.js
-* Build Spring Boot application within docker container
 * Timer Meter 
 * Latency via Chaos Monkey
 * Spring Integration tests
