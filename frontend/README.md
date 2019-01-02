@@ -38,8 +38,10 @@ npm run test:unit
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
 
-## Credits
+## Further information
 
 * [Bootstrap Vue.js](https://bootstrap-vue.js.org/)
 * [Spring Boot with Vue.js](https://github.com/jonashackt/spring-boot-vuejs)
-* [Call RESTful api in Vue.js](https://alligator.io/vuejs/rest-api-axios/)
+* [Axios](https://github.com/axios/axios)
+* [Axios sample](https://github.com/seeschweiler/axios-tutorial) 
+* [Working with WebStorm](https://blog.jetbrains.com/webstorm/2018/01/working-with-vue-js-in-webstorm/)
