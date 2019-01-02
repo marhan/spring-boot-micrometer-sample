@@ -4,23 +4,32 @@ This project is meant as sandbox for experiments and sample implementation for S
 
 The state of this repository is still **work in progress**, but should run without issues.
 
-# Requirements
+# Requirements (Run)
+
+* Docker / Docker Compose (RAM 4 GB min.)
+
+# Requirements (Dev)
 
 * Java JDK 11
-* Docker (RAM 4 GB min.)
+* Node.js 8
 
 # Introductions
 
 * [Concepts of Micrometer](https://micrometer.io/docs/concepts)
 * [Spring Boot Supported Metrics](https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#production-ready-metrics-meter)
 
-# Start Monitoring
+# Run complete monitoring environment
 
 ```bash
 ./start_complete_stack.sh
 ```
 
-This script will build the Spring Boot project via **Gradle** and build the whole docker environment via **Docker Compose**.
+This script will do the steps via Docker ...
+
+* remove all docker volumes of previous builds.
+* build the Vue.js Frontend frontend project.
+* build the Spring Boot backend project.
+* start and configured all monitoring products like (Elasticsearch, Kibana, Prometheus, ...)
 
 # Stop and destroy all containers with its volumes manually
 
@@ -32,13 +41,14 @@ docker volume remove spring-boot-micrometer-sample_prometheus_data
 docker volume remove spring-boot-micrometer-sample_kibana_data
 ```
 
-# Credits
+# Further informations
 
 * [Prometheus, Grafana Setup](https://github.com/vegasbrianc/prometheus)
 * [Micrometer Samples](https://github.com/micrometer-metrics/micrometer/tree/master/samples/micrometer-samples-boot1/src/main/java/io/micrometer/boot1/samples)
 
 # TODO
-* Frontend implementation with vue.js
+
+* Frontend implementation with vue.js (ongoing)
 * Timer Meter 
 * Latency via Chaos Monkey
 * Spring Integration tests

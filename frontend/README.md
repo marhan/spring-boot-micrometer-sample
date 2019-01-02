@@ -1,4 +1,8 @@
-# frontend
+# Vue.js frontend
+
+## Requirements 
+
+* JDK 11
 
 ## Project setup
 ```
@@ -38,7 +42,7 @@ npm run test:unit
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
 
-## Further information
+## Further informations
 
 * [Bootstrap Vue.js](https://bootstrap-vue.js.org/)
 * [Spring Boot with Vue.js](https://github.com/jonashackt/spring-boot-vuejs)

@@ -1,13 +1,14 @@
 # Spring Boot application
 
-Requirements: JDK 11
+## Requirements 
 
-# Development
+* JDK 11
 
-## Run locally
+## Development
+
+run locally
 
 ```bash
-cd spring-boot
 ./gradlew bootRun --args='--spring.profiles.active=local'
 ```
 The monitoring systems are not connected, if the app runs locally.   
