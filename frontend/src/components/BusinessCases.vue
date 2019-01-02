@@ -1,27 +1,44 @@
 <template>
-    <div class="container">
+    <b-container>
         <div class="BusinessCases">
             <div style="margin-top: 2rem; padding-bottom: 1rem;"><h1>Apartment rents</h1></div>
-            <div style="padding: 1rem;">
-                <b-button @click="callRestService()" type="button" class="btn btn-primary" style="margin-bottom: 1rem; margin-right: 1rem;">Start a rent
-                </b-button>
-                <div>
-                    <p>Results: {{ results }}</p>
+            <b-row>
+                <b-col cols="2">
+                    <b-button @click="callStartRentApartmentService()" variant="outline-primary">Start a rent
+                    </b-button>
+                </b-col>
+                <b-col>
+                    <b-alert :show="showStartRentApartmentServiceError===false && results.length > 0"
+                             variant="success">
+                        <h4>Success</h4>
+                        <hr>
+                        <p class="mb-0">{{ results }}</p>
+                    </b-alert>
+                    <b-alert :show="showStartRentApartmentServiceError"
+                             @dismissed="showStartRentApartmentServiceError=false"
+                             dismissible
+                             v-for="error in errors" :key="error"
+                             variant="danger">
+                        <h4>Error</h4>
+                        <hr>
+                        <p class="mb-0">{{ error }}</p>
+                    </b-alert>
+                </b-col>
+            </b-row>
+            <div class="row">
+                <div style="padding: 1rem;">
+                    <button @click="callStartRentApartmentService()" type="button" class="btn btn-primary"
+                            style="margin-bottom: 1rem; margin-right: 1rem;">Start a rent
+                    </button>
+                    <button type="button" class="btn btn-warning" style="margin-bottom: 1rem; margin-right: 1rem;">Abort a rent
+                    </button>
+                    <button type="button" class="btn btn-success" style="margin-bottom: 1rem; margin-right: 1rem;">
+                        Confirm a rent
+                    </button>
                 </div>
             </div>
-            <div style="padding: 1rem;">
-                <button @click="callRestService()" type="button" class="btn btn-primary"
-                        style="margin-bottom: 1rem; margin-right: 1rem;">Start a rent
-                </button>
-                <button type="button" class="btn btn-warning" style="margin-bottom: 1rem; margin-right: 1rem;">Abort a
-                    rent
-                </button>
-                <button type="button" class="btn btn-success" style="margin-bottom: 1rem; margin-right: 1rem;">Confirm a
-                    rent
-                </button>
-            </div>
         </div>
-    </div>
+    </b-container>
 </template>
 
 <script>
@@ -37,23 +54,25 @@
         data() {
             return {
                 results: [],
-                errors: []
+                errors: [],
+                showStartRentApartmentServiceError: false,
             }
         },
 
         methods: {
             // Fetches posts when the component is created.
-            callRestService() {
+            callStartRentApartmentService() {
 
                 AXIOS.get(`/apartment/start-rent-apartment/1`)
-                    .then(response =>  {
+                    .then(response => {
                         // JSON responses are automatically parsed.
                         this.results = response.data;
-                        console.log(response.data);
+
                     })
                     .catch(error => {
-                        console.log(error);
-                        //this.data.errors.push(error);
+                        this.errors = [];
+                        this.errors.push(error.message);
+                        this.showStartRentApartmentServiceError = true;
                     })
             }
         }
