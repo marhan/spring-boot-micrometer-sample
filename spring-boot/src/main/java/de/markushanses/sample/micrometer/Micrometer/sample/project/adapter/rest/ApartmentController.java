@@ -6,6 +6,7 @@ import io.micrometer.core.instrument.Tags;
 import io.micrometer.core.instrument.Timer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -43,7 +44,7 @@ public class ApartmentController {
         this.random = new Random();
     }
 
-    @PostMapping(path = "/reserve-apartment")
+    @PostMapping(path = "/reserve-apartment", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity reserveApartment(@RequestBody ReserveApartmentRequest request) {
         if (request.getApartmentId() == 2l) {
