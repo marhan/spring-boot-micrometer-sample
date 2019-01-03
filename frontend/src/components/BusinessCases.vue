@@ -1,6 +1,8 @@
 <template>
     <b-container>
         <div style="margin-top: 2rem; padding-bottom: 1rem;"><h1>Apartments</h1></div>
+        <b-table style="margin-top: 1rem; padding-bottom: 1rem;" striped hover :items="apartments"></b-table>
+        <hr>
         <!-- reserve -->
         <b-row style="margin-top: 1rem; padding-bottom: 1rem;">
             <b-col cols="3">
@@ -82,6 +84,8 @@
 
         data() {
             return {
+                apartments: [],
+                apartmentErrors: [],
                 reserveApartmentResponse: null,
                 reserveApartmentErrors: [],
                 confirmApartmentRentResponse: null,
@@ -90,8 +94,22 @@
                 cancelApartmentRentErrors: [],
             }
         },
+        mounted: function () {
+            this.callRetrieveApartmentService();
+        },
         methods: {
-            // Fetches posts when the component is created.
+            callRetrieveApartmentService() {
+                this.apartmentErrors = [];
+
+                Axios.get("/apartment")
+                    .then(response => {
+                        this.apartments = response.data;
+                    })
+                    .catch(error => {
+                        this.apartments = [];
+                        this.apartmentErrors.push(error.message);
+                    })
+            },
             callReserveApartmentService() {
                 this.reserveApartmentErrors = [];
 

@@ -24,8 +24,12 @@ public class ApartmentController {
     private List<ApartmentResource> createApartmentList() {
         ApartmentResource apartmentResourceOne = new ApartmentResource();
         apartmentResourceOne.setApartmentId(1L);
+        apartmentResourceOne.setCity("Hamburg");
+        apartmentResourceOne.setStatus(ApartmentResource.Status.reserved);
         ApartmentResource apartmentResourceTwo = new ApartmentResource();
-        apartmentResourceTwo.setApartmentId(1L);
+        apartmentResourceTwo.setApartmentId(2L);
+        apartmentResourceTwo.setCity("Berlin");
+        apartmentResourceTwo.setStatus(ApartmentResource.Status.free);
         return List.of(apartmentResourceOne, apartmentResourceTwo);
     }
 
