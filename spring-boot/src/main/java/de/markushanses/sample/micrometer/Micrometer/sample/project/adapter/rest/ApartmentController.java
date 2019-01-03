@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.Clock;
@@ -22,7 +23,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 @RestController
 @CrossOrigin(origins = "*", allowedHeaders = "*")
-@RequestMapping(value = "api/apartment")
+@RequestMapping(path = "api/apartment")
 public class ApartmentController {
 
     private final Counter rentSuccessCounter;
@@ -42,8 +43,9 @@ public class ApartmentController {
         this.random = new Random();
     }
 
-    @PostMapping("/reserve-apartment")
-    public ResponseEntity<String> reserveApartment(@RequestBody ReserveApartmentRequest request) {
+    @PostMapping(path = "/reserve-apartment")
+    @ResponseStatus(HttpStatus.CREATED)
+    public ResponseEntity reserveApartment(@RequestBody ReserveApartmentRequest request) {
         if (request.getApartmentId() == 2l) {
             throw new ApartmentNotFoundException("No apartment found");
         }
