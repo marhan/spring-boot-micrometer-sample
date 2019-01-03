@@ -10,6 +10,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -40,14 +42,14 @@ public class ApartmentController {
         this.random = new Random();
     }
 
-    @GetMapping("/reserve-apartment/{apartmentNumber}")
-    public ResponseEntity<String> startRentApartment(@PathVariable Long apartmentNumber) {
-        if (apartmentNumber == 2l) {
+    @PostMapping("/reserve-apartment")
+    public ResponseEntity<String> reserveApartment(@RequestBody ReserveApartmentRequest request) {
+        if (request.getApartmentId() == 2l) {
             throw new ApartmentNotFoundException("No apartment found");
         }
         startRentCounter.increment();
         rentProgress.incrementAndGet();
-        return new ResponseEntity("Apartment start rent ID: " + Clock.systemDefaultZone().millis(), HttpStatus.OK);
+        return new ResponseEntity("Reserved apartment with ID: " + request.getApartmentId(), HttpStatus.CREATED);
     }
 
     @GetMapping("/confirm-apartment-rent/{apartmentNumber}")

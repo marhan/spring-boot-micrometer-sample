@@ -10,6 +10,10 @@ buildscript {
     }
 }
 
+plugins {
+    id 'net.ltgt.apt' version '0.10'
+}
+
 apply plugin: 'java'
 apply plugin: 'idea'
 apply plugin: 'org.springframework.boot'
@@ -27,6 +31,11 @@ repositories {
 }
 
 dependencies {
+
+    // lombok
+    compileOnly 'org.projectlombok:lombok:1.18.4'
+    apt 'org.projectlombok:lombok:1.18.4'
+
     // minimal spring boot with actuator
     implementation("org.springframework.boot:spring-boot-starter-web:${springBootVersion}")
     implementation("org.springframework.boot:spring-boot-starter-data-rest:${springBootVersion}")

@@ -82,7 +82,9 @@
     /*eslint no-console: "error"*/
 
     import Axios from 'axios'
+
     Axios.defaults.baseURL = process.env.VUE_APP_SERVICE_URL;
+    //Axios.defaults.headers.post['Content-Type'] = 'application/form-data';
 
     export default {
 
@@ -105,7 +107,7 @@
             // Fetches posts when the component is created.
             callReserveApartmentService() {
 
-                Axios.get(`/apartment/reserve-apartment/1`)
+                Axios.post('/apartment/reserve-apartment', {"apartmentId": "1"})
                     .then(response => {
                         // JSON responses are automatically parsed.
                         this.reserveApartmentResults = response.data;
