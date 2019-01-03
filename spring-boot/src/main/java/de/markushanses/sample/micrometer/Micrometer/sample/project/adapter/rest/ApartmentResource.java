@@ -5,7 +5,7 @@ import lombok.Data;
 import java.io.Serializable;
 
 @Data
-class ReserveApartmentRequest implements Serializable {
+class ApartmentResource implements Serializable {
 
     private Long apartmentId;
 

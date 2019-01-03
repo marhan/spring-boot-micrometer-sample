@@ -9,17 +9,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.time.Clock;
 import java.util.Random;
-import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
 @RestController
@@ -44,45 +40,47 @@ public class ApartmentController {
         this.random = new Random();
     }
 
-    @PostMapping(path = "/reserve-apartment", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(path = "/reserve-apartment", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity reserveApartment(@RequestBody ReserveApartmentRequest request) {
-        if (request.getApartmentId() == 2l) {
+    public ResponseEntity<ApartmentResource> reserveApartment(@RequestBody ApartmentResource resource) {
+        if (resource.getApartmentId() == 2l) {
             throw new ApartmentNotFoundException("No apartment found");
         }
         startRentCounter.increment();
         rentProgress.incrementAndGet();
-        return new ResponseEntity("Reserved apartment with ID: " + request.getApartmentId(), HttpStatus.CREATED);
+        return new ResponseEntity<>(resource, HttpStatus.CREATED);
     }
 
-    @GetMapping("/confirm-apartment-rent/{apartmentNumber}")
-    public ResponseEntity<String> rentApartment(@PathVariable Long apartmentNumber) {
-        if (apartmentNumber == 2l) {
+    @PostMapping(path = "/confirm-apartment-rent", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.CREATED)
+    public ResponseEntity<ApartmentResource> rentApartment(@RequestBody ApartmentResource resource) {
+        if (resource.getApartmentId() == 2l) {
             throw new ApartmentNotFoundException("No apartment found");
         }
         rentProgress.decrementAndGet();
         rentSuccessCounter.increment();
-        return new ResponseEntity("Apartment rent ID: " + Clock.systemDefaultZone().millis(), HttpStatus.OK);
+        return new ResponseEntity<>(resource, HttpStatus.CREATED);
     }
 
 
-    @GetMapping("/cancel-apartment-rent/{apartmentNumber}")
-    public ResponseEntity<String> cancelRentApartment(@PathVariable Long apartmentNumber) {
-        if (apartmentNumber == 2l) {
+    @PostMapping(path = "/cancel-apartment-rent", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.CREATED)
+    public ResponseEntity<ApartmentResource> cancelRentApartment(@RequestBody ApartmentResource resource) {
+        if (resource.getApartmentId() == 2l) {
             throw new ApartmentNotFoundException("No apartment found");
         }
         cancelCounter.increment();
         rentProgress.decrementAndGet();
-        return new ResponseEntity("Apartment rent aborted ID: " + Clock.systemDefaultZone().millis(), HttpStatus.OK);
+        return new ResponseEntity<>(resource, HttpStatus.CREATED);
     }
 
-    @GetMapping("/delay/{delayInSeconds}")
+    /*@GetMapping("/delay/{delayInSeconds}")
     public ResponseEntity<String> cancelRentApartmentWithDelay(@PathVariable Long delayInSeconds) {
         rentTimer.record(simulatedLatency(delayInSeconds), TimeUnit.SECONDS);
-        return new ResponseEntity("Apartment delay ID: " + Clock.systemDefaultZone().millis(), HttpStatus.OK);
+        return new ResponseEntity<>("Apartment delay ID: " + Clock.systemDefaultZone().millis(), HttpStatus.OK);
     }
 
     private long simulatedLatency(long center) {
         return (long) (random.nextGaussian() * 10) + center;
-    }
+    }*/
 }

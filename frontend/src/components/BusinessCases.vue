@@ -8,11 +8,11 @@
                 </b-button>
             </b-col>
             <b-col>
-                <b-alert :show="showReserveApartmentServiceError===false && reserveApartmentResults.length > 0"
+                <b-alert :show="showReserveApartmentServiceError===false && reserveApartmentResponse !== null"
                          variant="success">
-                    <h4>Successful reserved</h4>
+                    <h4>Apartment successfully reserved</h4>
                     <hr>
-                    <p class="mb-0">{{ reserveApartmentResults }}</p>
+                    <p class="mb-0">{{ reserveApartmentResponse }}</p>
                 </b-alert>
                 <b-alert :show="showReserveApartmentServiceError"
                          @dismissed="showReserveApartmentServiceError=false"
@@ -33,11 +33,11 @@
                 </b-button>
             </b-col>
             <b-col>
-                <b-alert :show="showConfirmApartmentRentServiceError===false && confirmApartmentRentResults.length > 0"
+                <b-alert :show="showConfirmApartmentRentServiceError===false && confirmApartmentRentResponse !== null"
                          variant="success">
-                    <h4>Rent successful started</h4>
+                    <h4>Apartment rent successful started</h4>
                     <hr>
-                    <p class="mb-0">{{ confirmApartmentRentResults }}</p>
+                    <p class="mb-0">{{ confirmApartmentRentResponse }}</p>
                 </b-alert>
                 <b-alert :show="showConfirmApartmentRentServiceError"
                          @dismissed="showConfirmApartmentRentServiceError=false"
@@ -58,7 +58,7 @@
                 </b-button>
             </b-col>
             <b-col>
-                <b-alert :show="showCancelApartmentRentServiceError===false && cancelApartmentRentResults.length > 0"
+                <b-alert :show="showCancelApartmentRentServiceError===false && cancelApartmentRentResults !== null"
                          variant="success">
                     <h4>Rent successful cancelled</h4>
                     <hr>
@@ -84,7 +84,6 @@
     import Axios from 'axios'
 
     Axios.defaults.baseURL = process.env.VUE_APP_SERVICE_URL;
-    //Axios.defaults.headers.post['Content-Type'] = 'application/form-data';
 
     export default {
 
@@ -92,13 +91,13 @@
 
         data() {
             return {
-                reserveApartmentResults: [],
+                reserveApartmentResponse: null,
                 reserveApartmentErrors: [],
                 showReserveApartmentServiceError: false,
-                confirmApartmentRentResults: [],
+                confirmApartmentRentResponse: null,
                 confirmApartmentRentErrors: [],
                 showConfirmApartmentRentServiceError: false,
-                cancelApartmentRentResults: [],
+                cancelApartmentRentResults: null,
                 cancelApartmentRentErrors: [],
                 showCancelApartmentRentServiceError: false
             }
@@ -107,39 +106,36 @@
             // Fetches posts when the component is created.
             callReserveApartmentService() {
 
-                Axios.post('/apartment/reserve-apartment', {"apartmentId": "1"})
+                Axios.post('/apartment/reserve-apartment', {"apartmentId": 1})
                     .then(response => {
-                        // JSON responses are automatically parsed.
-                        this.reserveApartmentResults = response.data;
-
+                        this.reserveApartmentResponse = response.data;
                     })
                     .catch(error => {
+                        this.reserveApartmentResponse = null;
                         this.reserveApartmentErrors = [];
                         this.reserveApartmentErrors.push(error.message);
                         this.showReserveApartmentServiceError = true;
                     })
             },
             callConfirmApartmentRentService() {
-                Axios.get(`/apartment/confirm-apartment-rent/1`)
+                Axios.post("/apartment/confirm-apartment-rent", {"apartmentId": 1})
                     .then(response => {
-                        // JSON responses are automatically parsed.
-                        this.confirmApartmentRentResults = response.data;
-
+                        this.confirmApartmentRentResponse = response.data;
                     })
                     .catch(error => {
+                        this.confirmApartmentRentResponse = null;
                         this.confirmApartmentRentErrors = [];
                         this.confirmApartmentRentErrors.push(error.message);
                         this.showConfirmApartmentRentServiceError = true;
                     })
             },
             callCancelApartmentRentService() {
-                Axios.get(`/apartment/cancel-apartment-rent/1`)
+                Axios.post("/apartment/cancel-apartment-rent", {"apartmentId": 1})
                     .then(response => {
-                        // JSON responses are automatically parsed.
                         this.cancelApartmentRentResults = response.data;
-
                     })
                     .catch(error => {
+                        this.cancelApartmentRentResults = null;
                         this.cancelApartmentRentErrors = [];
                         this.cancelApartmentRentErrors.push(error.message);
                         this.showCancelApartmentRentServiceError = true;
