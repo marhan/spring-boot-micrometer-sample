@@ -14,25 +14,17 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 @ControllerAdvice
 public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 
-	private final Counter errorApartmentCounter;
-	private final Counter errorHouseCounter;
+    private final Counter errorApartmentCounter;
 
-	@Autowired
-	public RestExceptionHandler(MeterRegistry registry) {
-		errorApartmentCounter = registry.counter("counter.apartment.rent.error", "object_type", "apartment", "rent_process_state", "error");
-		errorHouseCounter = registry.counter("counter.house.rent.error", "object_type", "house", "rent_process_state", "error");
-	}
+    @Autowired
+    public RestExceptionHandler(MeterRegistry registry) {
+        errorApartmentCounter = registry.counter("counter.apartment.rent.error", "object_type", "apartment", "rent_process_state", "error");
+    }
 
-	@ExceptionHandler({ApartmentNotFoundException.class})
-	protected ResponseEntity<Object> handleApartmentNotFound(Exception ex, WebRequest request) {
-		errorApartmentCounter.increment();
-		return handleExceptionInternal(ex, "Apartment not found, try later!", new HttpHeaders(), HttpStatus.NOT_FOUND, request);
-	}
-
-	@ExceptionHandler({HouseNotFoundException.class})
-	protected ResponseEntity<Object> handleHouseFound(Exception ex, WebRequest request) {
-		errorHouseCounter.increment();
-		return handleExceptionInternal(ex, "House not found, try later!", new HttpHeaders(), HttpStatus.NOT_FOUND, request);
-	}
+    @ExceptionHandler({ApartmentNotFoundException.class})
+    protected ResponseEntity<Object> handleApartmentNotFound(Exception ex, WebRequest request) {
+        errorApartmentCounter.increment();
+        return handleExceptionInternal(ex, "Apartment not found, try later!", new HttpHeaders(), HttpStatus.NOT_FOUND, request);
+    }
 
 }
