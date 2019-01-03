@@ -8,15 +8,12 @@
                 </b-button>
             </b-col>
             <b-col>
-                <b-alert :show="showReserveApartmentServiceError===false && reserveApartmentResponse !== null"
-                         variant="success">
+                <b-alert :show="reserveApartmentErrors.length <= 0 && reserveApartmentResponse !== null" variant="success">
                     <h4>Apartment successfully reserved</h4>
                     <hr>
                     <p class="mb-0">{{ reserveApartmentResponse }}</p>
                 </b-alert>
-                <b-alert :show="showReserveApartmentServiceError"
-                         @dismissed="showReserveApartmentServiceError=false"
-                         dismissible
+                <b-alert :show="reserveApartmentErrors.length > 0"
                          v-for="error in reserveApartmentErrors" :key="error"
                          variant="danger">
                     <h4>Error</h4>
@@ -33,15 +30,12 @@
                 </b-button>
             </b-col>
             <b-col>
-                <b-alert :show="showConfirmApartmentRentServiceError===false && confirmApartmentRentResponse !== null"
-                         variant="success">
+                <b-alert :show="confirmApartmentRentErrors.length <= 0 && confirmApartmentRentResponse !== null" variant="success">
                     <h4>Apartment rent successful started</h4>
                     <hr>
                     <p class="mb-0">{{ confirmApartmentRentResponse }}</p>
                 </b-alert>
-                <b-alert :show="showConfirmApartmentRentServiceError"
-                         @dismissed="showConfirmApartmentRentServiceError=false"
-                         dismissible
+                <b-alert :show="confirmApartmentRentErrors.length > 0"
                          v-for="error in confirmApartmentRentErrors" :key="error"
                          variant="danger">
                     <h4>Error</h4>
@@ -58,15 +52,12 @@
                 </b-button>
             </b-col>
             <b-col>
-                <b-alert :show="showCancelApartmentRentServiceError===false && cancelApartmentRentResults !== null"
-                         variant="success">
+                <b-alert :show="cancelApartmentRentErrors.length <= 0 && cancelApartmentRentResults !== null" variant="success">
                     <h4>Rent successful cancelled</h4>
                     <hr>
                     <p class="mb-0">{{ cancelApartmentRentResults }}</p>
                 </b-alert>
-                <b-alert :show="showCancelApartmentRentServiceError"
-                         @dismissed="showCancelApartmentRentServiceError=false"
-                         dismissible
+                <b-alert :show="cancelApartmentRentErrors.length > 0"
                          v-for="error in cancelApartmentRentErrors" :key="error"
                          variant="danger">
                     <h4>Error</h4>
@@ -93,52 +84,48 @@
             return {
                 reserveApartmentResponse: null,
                 reserveApartmentErrors: [],
-                showReserveApartmentServiceError: false,
                 confirmApartmentRentResponse: null,
                 confirmApartmentRentErrors: [],
-                showConfirmApartmentRentServiceError: false,
                 cancelApartmentRentResults: null,
                 cancelApartmentRentErrors: [],
-                showCancelApartmentRentServiceError: false
             }
         },
         methods: {
             // Fetches posts when the component is created.
             callReserveApartmentService() {
+                this.reserveApartmentErrors = [];
 
-                Axios.post('/apartment/reserve-apartment', {"apartmentId": 1})
+                Axios.post("/apartment-rent/reserve", {"apartmentId": 1})
                     .then(response => {
                         this.reserveApartmentResponse = response.data;
                     })
                     .catch(error => {
                         this.reserveApartmentResponse = null;
-                        this.reserveApartmentErrors = [];
                         this.reserveApartmentErrors.push(error.message);
-                        this.showReserveApartmentServiceError = true;
                     })
             },
             callConfirmApartmentRentService() {
-                Axios.post("/apartment/confirm-apartment-rent", {"apartmentId": 1})
+                this.confirmApartmentRentErrors = [];
+
+                Axios.post("/apartment-rent/confirm", {"apartmentId": 1})
                     .then(response => {
                         this.confirmApartmentRentResponse = response.data;
                     })
                     .catch(error => {
                         this.confirmApartmentRentResponse = null;
-                        this.confirmApartmentRentErrors = [];
                         this.confirmApartmentRentErrors.push(error.message);
-                        this.showConfirmApartmentRentServiceError = true;
                     })
             },
             callCancelApartmentRentService() {
-                Axios.post("/apartment/cancel-apartment-rent", {"apartmentId": 1})
+                this.cancelApartmentRentErrors = [];
+
+                Axios.post("/apartment-rent/cancel", {"apartmentId": 1})
                     .then(response => {
                         this.cancelApartmentRentResults = response.data;
                     })
                     .catch(error => {
                         this.cancelApartmentRentResults = null;
-                        this.cancelApartmentRentErrors = [];
                         this.cancelApartmentRentErrors.push(error.message);
-                        this.showCancelApartmentRentServiceError = true;
                     })
             }
         }
