@@ -35,7 +35,7 @@ This script will do the steps via Docker ...
 
 ## Step 2
 
-[Open application via browser](http://localhost:8080)
+[Open application via browser](http://localhost:8091)
 
 # Stop and destroy all containers with its volumes manually
 
