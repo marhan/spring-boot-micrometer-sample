@@ -6,7 +6,7 @@
                 <b-alert :show="apartmentErrors.length > 0"
                          v-for="error in apartmentErrors" :key="error"
                          variant="danger">
-                    <h4>Could not retrieve apartments</h4>
+                    <h4>Could not retrieve apartment list!</h4>
                     <hr>
                     <p class="mb-0">{{ error }}</p>
                 </b-alert>
