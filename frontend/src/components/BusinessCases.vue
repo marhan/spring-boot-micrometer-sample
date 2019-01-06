@@ -3,15 +3,10 @@
         <div style="margin-top: 2rem; padding-bottom: 1rem;"><h1>Apartments</h1></div>
         <b-row>
             <b-col>
-                <b-alert :show="reserveApartmentErrors.length <= 0 && reserveApartmentResponse !== null" variant="success">
-                    <h4>Apartment successfully reserved</h4>
-                    <hr>
-                    <p class="mb-0">{{ reserveApartmentResponse }}</p>
-                </b-alert>
-                <b-alert :show="reserveApartmentErrors.length > 0"
-                         v-for="error in reserveApartmentErrors" :key="error"
+                <b-alert :show="apartmentErrors.length > 0"
+                         v-for="error in apartmentErrors" :key="error"
                          variant="danger">
-                    <h4>Error</h4>
+                    <h4>Could not retrieve apartments</h4>
                     <hr>
                     <p class="mb-0">{{ error }}</p>
                 </b-alert>
@@ -19,31 +14,15 @@
         </b-row>
         <b-row>
             <b-col>
-                <b-alert :show="confirmApartmentRentErrors.length <= 0 && confirmApartmentRentResponse !== null" variant="success">
-                    <h4>Apartment rent successful started</h4>
+                <b-alert :show="apartmentActionErrors.length <= 0 && apartmentActionSuccessResponse !== null" variant="success">
+                    <h4>{{ apartmentActionName }}</h4>
                     <hr>
-                    <p class="mb-0">{{ confirmApartmentRentResponse }}</p>
+                    <p class="mb-0">{{ apartmentActionSuccessResponse }}</p>
                 </b-alert>
-                <b-alert :show="confirmApartmentRentErrors.length > 0"
-                         v-for="error in confirmApartmentRentErrors" :key="error"
+                <b-alert :show="apartmentActionErrors.length > 0"
+                         v-for="error in apartmentActionErrors" :key="error"
                          variant="danger">
-                    <h4>Error</h4>
-                    <hr>
-                    <p class="mb-0">{{ error }}</p>
-                </b-alert>
-            </b-col>
-        </b-row>
-        <b-row>
-            <b-col>
-                <b-alert :show="cancelApartmentRentErrors.length <= 0 && cancelApartmentRentResults !== null" variant="success">
-                    <h4>Rent successful cancelled</h4>
-                    <hr>
-                    <p class="mb-0">{{ cancelApartmentRentResults }}</p>
-                </b-alert>
-                <b-alert :show="cancelApartmentRentErrors.length > 0"
-                         v-for="error in cancelApartmentRentErrors" :key="error"
-                         variant="danger">
-                    <h4>Error</h4>
+                    <h4>{{ apartmentActionName }}</h4>
                     <hr>
                     <p class="mb-0">{{ error }}</p>
                 </b-alert>
@@ -95,12 +74,9 @@
                 apartmentsFields: ['apartmentId', 'city', 'status', 'show_details'],
                 apartments: [],
                 apartmentErrors: [],
-                reserveApartmentResponse: null,
-                reserveApartmentErrors: [],
-                confirmApartmentRentResponse: null,
-                confirmApartmentRentErrors: [],
-                cancelApartmentRentResults: null,
-                cancelApartmentRentErrors: [],
+                apartmentActionName: null,
+                apartmentActionErrors: [],
+                apartmentActionSuccessResponse: null,
                 bordered: true,
                 outlined: true
             }
@@ -110,54 +86,57 @@
         },
         methods: {
             callRetrieveApartmentService() {
+                this.apartmentActionName = "Retrieve apartments";
                 this.apartmentErrors = [];
 
                 Axios.get("/apartment")
                     .then(response => {
                         this.apartments = response.data;
-                        //let obj = JSON.parse(response.data);
-                        //console.log(obj);
-                        //this.apartments = Object.extend(response.data, {"successMessage": null, "errorMessage": null});
+                        this.apartmentActionSuccessResponse = "Apartment list retrieved successfully. Select the apartment apply the action you want.";
                     })
                     .catch(error => {
                         this.apartments = [];
+                        this.apartmentActionSuccessResponse = null;
                         this.apartmentErrors.push(error.message);
                     })
             },
             callReserveApartmentService(apartmentId) {
-                this.reserveApartmentErrors = [];
+                this.apartmentActionName = "Reserve apartment";
+                this.apartmentActionErrors = [];
 
                 Axios.post("/apartment-rent/reserve", {"apartmentId": apartmentId})
                     .then(response => {
-                        this.reserveApartmentResponse = response.data;
+                        this.apartmentActionSuccessResponse = response.data;
                     })
                     .catch(error => {
-                        this.reserveApartmentResponse = null;
-                        this.reserveApartmentErrors.push(error.message);
+                        this.apartmentActionSuccessResponse = null;
+                        this.apartmentActionErrors.push(error.message);
                     })
             },
             callConfirmApartmentRentService(apartmentId) {
-                this.confirmApartmentRentErrors = [];
+                this.apartmentActionName = "Confirm apartment rent";
+                this.apartmentActionErrors = [];
 
                 Axios.post("/apartment-rent/confirm", {"apartmentId": apartmentId})
                     .then(response => {
-                        this.confirmApartmentRentResponse = response.data;
+                        this.apartmentActionSuccessResponse = response.data;
                     })
                     .catch(error => {
-                        this.confirmApartmentRentResponse = null;
-                        this.confirmApartmentRentErrors.push(error.message);
+                        this.apartmentActionSuccessResponse = null;
+                        this.apartmentActionErrors.push(error.message);
                     })
             },
             callCancelApartmentRentService(apartmentId) {
-                this.cancelApartmentRentErrors = [];
+                this.apartmentActionName = "Cancel apartment rent";
+                this.apartmentActionErrors = [];
 
                 Axios.post("/apartment-rent/cancel", {"apartmentId": apartmentId})
                     .then(response => {
-                        this.cancelApartmentRentResults = response.data;
+                        this.apartmentActionSuccessResponse = response.data;
                     })
                     .catch(error => {
-                        this.cancelApartmentRentResults = null;
-                        this.cancelApartmentRentErrors.push(error.message);
+                        this.apartmentActionSuccessResponse = null;
+                        this.apartmentActionErrors.push(error.message);
                     })
             }
         }
