@@ -20,6 +20,8 @@ The state of this repository is still **work in progress**, but should run witho
 
 # Run complete monitoring environment
 
+## Step 1
+
 ```bash
 ./start_complete_stack.sh
 ```
@@ -30,6 +32,10 @@ This script will do the steps via Docker ...
 * build the Vue.js Frontend frontend project.
 * build the Spring Boot backend project.
 * start and configured all monitoring products like (Elasticsearch, Kibana, Prometheus, ...)
+
+## Step 2
+
+[Open application via browser](http://localhost:8080)
 
 # Stop and destroy all containers with its volumes manually
 

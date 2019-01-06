@@ -10,7 +10,6 @@
 
                 <b-navbar-nav>
                     <b-nav-item :to="{ path: '/' }">Home</b-nav-item>
-                    <b-nav-item :to="{ path: 'business-cases' }">Business cases</b-nav-item>
                 </b-navbar-nav>
 
                 <!-- Right aligned nav items -->
