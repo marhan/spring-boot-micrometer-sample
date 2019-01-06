@@ -1,4 +1,4 @@
-package de.markushanses.sample.micrometer.Micrometer.sample.project.adapter.rest;
+package de.markushanses.sample.micrometer.sample.project.adapter.rest;
 
 public class  ApartmentNotFoundException extends RuntimeException {
 

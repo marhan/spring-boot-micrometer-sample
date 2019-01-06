@@ -1,5 +1,9 @@
-package de.markushanses.sample.micrometer.Micrometer.sample.project.adapter.rest;
+package de.markushanses.sample.micrometer.sample.project.adapter.rest;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -10,10 +14,15 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
+@Api(value = "Apartment management endpoint", description = "Operation for apartment lifecycle management")
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RequestMapping(path = "api/apartment")
 public class ApartmentController {
 
+    @ApiOperation(value = "View a list of available employees", response = List.class)
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successfully retrieved list")
+    })
     @GetMapping
     public ResponseEntity<List<ApartmentResource>> retrieveAll() {
         return new ResponseEntity<>(
