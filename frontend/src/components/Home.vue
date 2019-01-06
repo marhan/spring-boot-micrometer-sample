@@ -92,7 +92,8 @@
                 Axios.get("/apartment")
                     .then(response => {
                         this.apartments = response.data;
-                        this.apartmentActionSuccessResponse = "Apartment list retrieved successfully. Select the apartment apply the action you want.";
+                        this.apartmentActionSuccessResponse = "Apartment list retrieved successfully. " +
+                            "Select the apartment you want to modify and apply an action.";
                     })
                     .catch(error => {
                         this.apartments = [];
