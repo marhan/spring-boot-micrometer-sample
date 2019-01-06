@@ -28,16 +28,22 @@ The state of this repository is still **work in progress**, but should run witho
 
 This script will do the steps via Docker ...
 
-* remove all docker volumes of previous builds.
-* build the Vue.js Frontend frontend project.
-* build the Spring Boot backend project.
-* start and configured all monitoring products like (Elasticsearch, Kibana, Prometheus, ...)
+* start and configured all monitoring products like (Elasticsearch, Kibana, Prometheus, ...).
+* build and start the Vue.js Frontend frontend project.
+* build and start the Spring Boot backend project.
 
 ## Step 2
 
 [Open application via browser](http://localhost:8091)
 
-# Stop and destroy all containers with its volumes manually
+This script will do the steps via Docker ...
+
+* stop and remove all docker containers.
+* remove all created docker volumes.
+
+# Dev hints
+
+## Stop and destroy all containers with its volumes manually
 
 ```bash
 docker-compose stop && docker-compose rm -f -v
@@ -45,6 +51,12 @@ docker volume remove spring-boot-micrometer-sample_elasticsearch_data
 docker volume remove spring-boot-micrometer-sample_grafana_data
 docker volume remove spring-boot-micrometer-sample_prometheus_data
 docker volume remove spring-boot-micrometer-sample_kibana_data
+```
+
+## Rebuild one container
+
+```bash
+docker-compose up -d --no-deps --build grafana
 ```
 
 # Further informations
@@ -55,6 +67,7 @@ docker volume remove spring-boot-micrometer-sample_kibana_data
 # TODO
 
 * Frontend implementation with vue.js
+* Swagger (OpenApi)
 * Ability to create new apartments. (inmemory persistence)
 * Timer Meter 
 * Latency via Chaos Monkey
