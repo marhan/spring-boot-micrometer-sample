@@ -48,7 +48,8 @@ docker volume remove spring-boot-micrometer-sample_kibana_data
 
 # TODO
 
-* Frontend implementation with vue.js (ongoing)
+* Frontend implementation with vue.js
+* Ability to create new apartments. (inmemory persistence)
 * Timer Meter 
 * Latency via Chaos Monkey
 * Spring Integration tests
