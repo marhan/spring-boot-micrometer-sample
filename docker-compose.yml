@@ -44,19 +44,28 @@ services:
     depends_on:
       - elasticsearch
 
-  springboot:
-    volumes:
-      - ./spring-boot/build/libs/spring-boot-micrometer-1.jar:/usr/src/micrometer/spring-boot-micrometer-1.jar:ro
+  springboot:  
     build:
       context: ./spring-boot
     depends_on:
       - elasticsearch
     image: springboot-micrometer
     ports:
-      - 8090:8080
-    command: "java -jar spring-boot-micrometer-1.jar"
+      - 8090:8080    
     environment:
       - "SPRING_PROFILES_ACTIVE=docker"
+    networks:
+      - monitoring
+    restart: always
+
+  frontend:    
+    build:
+      context: ./frontend
+    depends_on:
+      - springboot
+    image: frontend-micrometer
+    ports:
+      - 8091:8080
     networks:
       - monitoring
     restart: always
