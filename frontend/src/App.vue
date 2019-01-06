@@ -16,14 +16,14 @@
                 <!-- Right aligned nav items -->
                 <b-navbar-nav class="ml-auto">
 
-                    <b-nav-item-dropdown text="Service Links" right>
-                        <b-dropdown-item href="#">Health endpoint</b-dropdown-item>
-                        <b-dropdown-item href="#">Actuator endpoint</b-dropdown-item>
+                    <b-nav-item-dropdown text="App service hyperlinks" right>
+                        <b-dropdown-item :href="appServiceUrl + '/actuator'">All service actuators</b-dropdown-item>
+                        <b-dropdown-item :href="appServiceUrl + '/actuator/health'">Health actuator endpoint</b-dropdown-item>
+                        <b-dropdown-item :href="appServiceUrl + '/actuator/prometheus'">Prometheus actuator endpoint</b-dropdown-item>
                         <b-dropdown-item href="#">Swagger UI</b-dropdown-item>
                     </b-nav-item-dropdown>
 
-                    <b-nav-item-dropdown text="Application Links" right>
-                        <b-dropdown-item href="/actuator/prometheus">Service actuator endpoint for Prometheus</b-dropdown-item>
+                    <b-nav-item-dropdown text="Monitoring hyperlinks" right>
                         <b-dropdown-item href="http://localhost:9090/targets">Prometheus instance</b-dropdown-item>
                         <b-dropdown-item href="http://localhost:3000">Grafana instance</b-dropdown-item>
                         <b-dropdown-item href="http://localhost:9200/">Elasticsearch instance</b-dropdown-item>
@@ -47,10 +47,12 @@
         data() {
             return {
                 appName: '',
+                appServiceUrl: '',
             }
         },
         created: function () {
             this.appName = process.env.VUE_APP_TITLE;
+            this.appServiceUrl = process.env.VUE_APP_SERVICE_URL;
         }
     }
 </script>

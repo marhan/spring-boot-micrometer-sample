@@ -63,7 +63,7 @@
 
     import Axios from 'axios'
 
-    Axios.defaults.baseURL = process.env.VUE_APP_SERVICE_URL;
+    Axios.defaults.baseURL = process.env.VUE_APP_SERVICE_URL + '/api';
 
     export default {
 
