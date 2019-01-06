@@ -1,6 +1,54 @@
 <template>
     <b-container>
         <div style="margin-top: 2rem; padding-bottom: 1rem;"><h1>Apartments</h1></div>
+        <b-row>
+            <b-col>
+                <b-alert :show="reserveApartmentErrors.length <= 0 && reserveApartmentResponse !== null" variant="success">
+                    <h4>Apartment successfully reserved</h4>
+                    <hr>
+                    <p class="mb-0">{{ reserveApartmentResponse }}</p>
+                </b-alert>
+                <b-alert :show="reserveApartmentErrors.length > 0"
+                         v-for="error in reserveApartmentErrors" :key="error"
+                         variant="danger">
+                    <h4>Error</h4>
+                    <hr>
+                    <p class="mb-0">{{ error }}</p>
+                </b-alert>
+            </b-col>
+        </b-row>
+        <b-row>
+            <b-col>
+                <b-alert :show="confirmApartmentRentErrors.length <= 0 && confirmApartmentRentResponse !== null" variant="success">
+                    <h4>Apartment rent successful started</h4>
+                    <hr>
+                    <p class="mb-0">{{ confirmApartmentRentResponse }}</p>
+                </b-alert>
+                <b-alert :show="confirmApartmentRentErrors.length > 0"
+                         v-for="error in confirmApartmentRentErrors" :key="error"
+                         variant="danger">
+                    <h4>Error</h4>
+                    <hr>
+                    <p class="mb-0">{{ error }}</p>
+                </b-alert>
+            </b-col>
+        </b-row>
+        <b-row>
+            <b-col>
+                <b-alert :show="cancelApartmentRentErrors.length <= 0 && cancelApartmentRentResults !== null" variant="success">
+                    <h4>Rent successful cancelled</h4>
+                    <hr>
+                    <p class="mb-0">{{ cancelApartmentRentResults }}</p>
+                </b-alert>
+                <b-alert :show="cancelApartmentRentErrors.length > 0"
+                         v-for="error in cancelApartmentRentErrors" :key="error"
+                         variant="danger">
+                    <h4>Error</h4>
+                    <hr>
+                    <p class="mb-0">{{ error }}</p>
+                </b-alert>
+            </b-col>
+        </b-row>
         <b-table :fields="apartmentsFields" :items="apartments" style="margin-top: 1rem; padding-bottom: 1rem;" striped hover :bordered="bordered"
                  :outlined="outlined">
             <template slot="show_details" slot-scope="row">
@@ -11,69 +59,18 @@
             </template>
             <template slot="row-details" slot-scope="row">
                 <b-card>
-                    <!-- reserve -->
-                    <b-row style="margin-top: 1rem; padding-bottom: 1rem;">
-                        <b-col cols="3">
-                            <b-button @click="callReserveApartmentService()" variant="outline-primary">Reserve an apartment
+                    <b-row>
+                        <b-col>
+                            <b-button @click="callReserveApartmentService(row.item.apartmentId)" variant="outline-primary">Reserve an apartment
                             </b-button>
                         </b-col>
                         <b-col>
-                            <b-alert :show="reserveApartmentErrors.length <= 0 && reserveApartmentResponse !== null" variant="success">
-                                <h4>Apartment successfully reserved</h4>
-                                <hr>
-                                <p class="mb-0">{{ reserveApartmentResponse }}</p>
-                            </b-alert>
-                            <b-alert :show="reserveApartmentErrors.length > 0"
-                                     v-for="error in reserveApartmentErrors" :key="error"
-                                     variant="danger">
-                                <h4>Error</h4>
-                                <hr>
-                                <p class="mb-0">{{ error }}</p>
-                            </b-alert>
-                        </b-col>
-                    </b-row>
-                    <hr>
-                    <!-- confirm -->
-                    <b-row style="margin-top: 2rem; padding-bottom: 1rem;">
-                        <b-col cols="3">
-                            <b-button @click="callConfirmApartmentRentService()" variant="outline-success">Confirm apartment rent
+                            <b-button @click="callConfirmApartmentRentService(row.item.apartmentId)" variant="outline-success">Confirm apartment rent
                             </b-button>
                         </b-col>
                         <b-col>
-                            <b-alert :show="confirmApartmentRentErrors.length <= 0 && confirmApartmentRentResponse !== null" variant="success">
-                                <h4>Apartment rent successful started</h4>
-                                <hr>
-                                <p class="mb-0">{{ confirmApartmentRentResponse }}</p>
-                            </b-alert>
-                            <b-alert :show="confirmApartmentRentErrors.length > 0"
-                                     v-for="error in confirmApartmentRentErrors" :key="error"
-                                     variant="danger">
-                                <h4>Error</h4>
-                                <hr>
-                                <p class="mb-0">{{ error }}</p>
-                            </b-alert>
-                        </b-col>
-                    </b-row>
-                    <hr>
-                    <!-- cancel -->
-                    <b-row style="margin-top: 2rem; padding-bottom: 1rem;">
-                        <b-col cols="3">
-                            <b-button @click="callCancelApartmentRentService()" variant="outline-warning">Cancel apartment rent
+                            <b-button @click="callCancelApartmentRentService(row.item.apartmentId)" variant="outline-warning">Cancel apartment rent
                             </b-button>
-                        </b-col>
-                        <b-col>
-                            <b-alert :show="cancelApartmentRentErrors.length <= 0 && cancelApartmentRentResults !== null" variant="success">
-                                <h4>Rent successful cancelled</h4>
-                                <hr>
-                                <p class="mb-0">{{ cancelApartmentRentResults }}</p>
-                            </b-alert>
-                            <b-alert :show="cancelApartmentRentErrors.length > 0"
-                                     v-for="error in cancelApartmentRentErrors" :key="error"
-                                     variant="danger">
-                                <h4>Error</h4>
-                                <hr>
-                                <p class="mb-0">{{ error }}</p>
-                            </b-alert>
                         </b-col>
                     </b-row>
                 </b-card>
@@ -118,16 +115,19 @@
                 Axios.get("/apartment")
                     .then(response => {
                         this.apartments = response.data;
+                        //let obj = JSON.parse(response.data);
+                        //console.log(obj);
+                        //this.apartments = Object.extend(response.data, {"successMessage": null, "errorMessage": null});
                     })
                     .catch(error => {
                         this.apartments = [];
                         this.apartmentErrors.push(error.message);
                     })
             },
-            callReserveApartmentService() {
+            callReserveApartmentService(apartmentId) {
                 this.reserveApartmentErrors = [];
 
-                Axios.post("/apartment-rent/reserve", {"apartmentId": 1})
+                Axios.post("/apartment-rent/reserve", {"apartmentId": apartmentId})
                     .then(response => {
                         this.reserveApartmentResponse = response.data;
                     })
@@ -136,10 +136,10 @@
                         this.reserveApartmentErrors.push(error.message);
                     })
             },
-            callConfirmApartmentRentService() {
+            callConfirmApartmentRentService(apartmentId) {
                 this.confirmApartmentRentErrors = [];
 
-                Axios.post("/apartment-rent/confirm", {"apartmentId": 1})
+                Axios.post("/apartment-rent/confirm", {"apartmentId": apartmentId})
                     .then(response => {
                         this.confirmApartmentRentResponse = response.data;
                     })
@@ -148,10 +148,10 @@
                         this.confirmApartmentRentErrors.push(error.message);
                     })
             },
-            callCancelApartmentRentService() {
+            callCancelApartmentRentService(apartmentId) {
                 this.cancelApartmentRentErrors = [];
 
-                Axios.post("/apartment-rent/cancel", {"apartmentId": 1})
+                Axios.post("/apartment-rent/cancel", {"apartmentId": apartmentId})
                     .then(response => {
                         this.cancelApartmentRentResults = response.data;
                     })
