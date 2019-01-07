@@ -1,0 +1,59 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1
+      author: marhan
+      changes:
+        - createTable:
+            tableName: apartment
+            columns:
+              - column:
+                  name: id
+                  type: int
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: apartment_id
+                  type: uuid
+                  constraints:
+                    unique: true
+                    nullable: false
+              - column:
+                  name: city
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: status
+                  type: varchar(50)
+                  constraints:
+                    nullable: false
+  - changeSet:
+      id: 2
+      author: marhan
+      changes:
+        - insert:
+            tableName: apartment
+            columns:
+              - column:
+                  name: apartment_id
+                  value: a81b0db2-7114-4f35-8776-751acb3730ca
+              - column:
+                  name: city
+                  value: Hamburg
+              - column:
+                  name: status
+                  value: free
+        - insert:
+            tableName: apartment
+            columns:
+              - column:
+                  name: apartment_id
+                  value: 6226560e-2e9a-4dad-8854-f996ed47e250
+              - column:
+                  name: city
+                  value: Berlin
+              - column:
+                  name: status
+                  value: free
