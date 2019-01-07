@@ -1,4 +1,4 @@
-package de.markushanses.sample.micrometer.sample.project;
+package de.markushanses.sample.micrometer.sample;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

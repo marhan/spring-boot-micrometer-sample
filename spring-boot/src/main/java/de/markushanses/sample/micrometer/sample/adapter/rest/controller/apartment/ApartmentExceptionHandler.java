@@ -1,4 +1,4 @@
-package de.markushanses.sample.micrometer.sample.project.adapter.rest.controller.apartment;
+package de.markushanses.sample.micrometer.sample.adapter.rest.controller.apartment;
 
 import io.micrometer.core.instrument.Counter;
 import io.micrometer.core.instrument.MeterRegistry;

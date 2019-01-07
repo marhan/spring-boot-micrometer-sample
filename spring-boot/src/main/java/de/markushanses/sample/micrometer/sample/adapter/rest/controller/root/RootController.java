@@ -1,4 +1,4 @@
-package de.markushanses.sample.micrometer.sample.project.adapter.rest.controller.root;
+package de.markushanses.sample.micrometer.sample.adapter.rest.controller.root;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

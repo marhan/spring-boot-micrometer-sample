@@ -1,4 +1,4 @@
-package de.markushanses.sample.micrometer.sample.project.adapter.rest.config;
+package de.markushanses.sample.micrometer.sample.adapter.rest.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
