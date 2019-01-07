@@ -1,4 +1,4 @@
-package de.markushanses.sample.micrometer.Micrometer.sample.project.adapter.rest;
+package de.markushanses.sample.micrometer.sample.project.adapter.rest.controller.apartment;
 
 import io.micrometer.core.instrument.Counter;
 import io.micrometer.core.instrument.MeterRegistry;
@@ -12,12 +12,12 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 @ControllerAdvice
-public class RestExceptionHandler extends ResponseEntityExceptionHandler {
+public class ApartmentExceptionHandler extends ResponseEntityExceptionHandler {
 
     private final Counter errorApartmentCounter;
 
     @Autowired
-    public RestExceptionHandler(MeterRegistry registry) {
+    public ApartmentExceptionHandler(MeterRegistry registry) {
         errorApartmentCounter = registry.counter("counter.apartment.rent.error", "object_type", "apartment", "rent_process_state", "error");
     }
 

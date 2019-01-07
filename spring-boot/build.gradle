@@ -33,8 +33,12 @@ repositories {
 dependencies {
 
     // lombok
-    annotationProcessor("org.projectlombok:lombok:1.18.4")
-    implementation("org.projectlombok:lombok:1.18.4")
+    annotationProcessor("org.projectlombok:lombok:${lombokVersion}")
+    implementation("org.projectlombok:lombok:${lombokVersion}")
+
+    // swagger
+    implementation("io.springfox:springfox-swagger2:${springfoxSwaggerVersion}")
+    implementation("io.springfox:springfox-swagger-ui:${springfoxSwaggerVersion}")
 
     // minimal spring boot with actuator
     implementation("org.springframework.boot:spring-boot-starter-web:${springBootVersion}")

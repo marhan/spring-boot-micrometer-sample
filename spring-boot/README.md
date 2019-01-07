@@ -4,7 +4,7 @@
 
 * JDK 11
 
-## Development
+## Dev
 
 run locally
 
@@ -13,6 +13,11 @@ run locally
 ```
 The monitoring systems are not connected, if the app runs locally.   
 
-# Find metrics
+# Service
 
-* [Application landing page](http://localhost:8090)
+* [Swagger UI](http://localhost:8082/swagger-ui.html)
+* [Actuator](http://localhost:8082/actuator)
+
+# Further reading
+
+* [SpringFox](http://springfox.github.io/springfox/)

@@ -1,4 +1,4 @@
-package de.markushanses.sample.micrometer.Micrometer.sample.project;
+package de.markushanses.sample.micrometer.sample.project.application.monitoring;
 
 import io.github.mweirauch.micrometer.jvm.extras.ProcessMemoryMetrics;
 import io.github.mweirauch.micrometer.jvm.extras.ProcessThreadMetrics;
