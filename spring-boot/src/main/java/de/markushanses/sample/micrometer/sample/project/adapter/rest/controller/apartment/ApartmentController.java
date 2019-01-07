@@ -1,4 +1,6 @@
-package de.markushanses.sample.micrometer.sample.project.adapter.rest;
+package de.markushanses.sample.micrometer.sample.project.adapter.rest.controller.apartment;
+
+import java.util.List;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -10,8 +12,6 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
 
 @RestController
 @Api(value = "Apartment management endpoint", description = "Operation for apartment lifecycle management")

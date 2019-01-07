@@ -1,10 +1,10 @@
-package de.markushanses.sample.micrometer.sample.project.adapter.rest;
+package de.markushanses.sample.micrometer.sample.project.adapter.rest.controller.apartment;
+
+import java.io.Serializable;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-
-import java.io.Serializable;
 
 @Data
 @ApiModel(description = "All details about the apartment. ")
