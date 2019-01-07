@@ -15,7 +15,7 @@ class ApartmentResource implements Serializable {
     }
 
     @ApiModelProperty(notes = "The apartment ID.")
-    private Long apartmentId;
+    private String apartmentId;
 
     @ApiModelProperty(notes = "The place of the apartment.")
     private String city;

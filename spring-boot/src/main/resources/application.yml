@@ -4,10 +4,10 @@ spring:
   h2:
     console:
       enabled: true
-  jpa:
-    database: h2
-    hibernate:
-      ddl-auto: validate
+  datasource:
+    url: jdbc:h2:data/micrometerdb;LOCK_TIMEOUT=10000;DB_CLOSE_ON_EXIT=FALSE;MVCC=TRUE;AUTO_SERVER=TRUE
+    username: micrometer
+    password: micrometer
   liquibase:
     url: jdbc:h2:mem:micrometerdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
     user: micrometer

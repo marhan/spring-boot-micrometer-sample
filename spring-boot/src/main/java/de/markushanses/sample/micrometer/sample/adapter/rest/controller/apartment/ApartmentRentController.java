@@ -26,62 +26,62 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(path = "api/apartment-rent", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 public class ApartmentRentController {
 
-    private final Counter rentSuccessCounter;
-    private final Counter startRentCounter;
-    private final Counter cancelCounter;
-    private final AtomicInteger rentProgress;
-    private final Timer rentTimer;
-    private final Random random;
+	private final Counter rentSuccessCounter;
+	private final Counter startRentCounter;
+	private final Counter cancelCounter;
+	private final AtomicInteger rentProgress;
+	private final Timer rentTimer;
+	private final Random random;
 
-    @Autowired
-    public ApartmentRentController(MeterRegistry registry) {
-        this.startRentCounter = registry.counter("counter.apartment.rent.start", "object_type", "apartment", "rent_process_state", "started");
-        this.rentSuccessCounter = registry.counter("counter.apartment.rent.success", "object_type", "apartment", "rent_process_state", "success");
-        this.cancelCounter = registry.counter("counter.apartment.rent.cancel", "object_type", "apartment", "rent_process_state", "aborted");
-        this.rentProgress = registry.gauge("gauge.apartment.rent.progress", Tags.of("object_type", "apartment", "rent_process_state", "ongoing"), new AtomicInteger(0));
-        this.rentTimer = Timer.builder("timer.apartment.rent").publishPercentileHistogram().register(registry);
-        this.random = new Random();
-    }
+	@Autowired
+	public ApartmentRentController(MeterRegistry registry) {
+		this.startRentCounter = registry.counter("counter.apartment.rent.start", "object_type", "apartment", "rent_process_state", "started");
+		this.rentSuccessCounter = registry.counter("counter.apartment.rent.success", "object_type", "apartment", "rent_process_state", "success");
+		this.cancelCounter = registry.counter("counter.apartment.rent.cancel", "object_type", "apartment", "rent_process_state", "aborted");
+		this.rentProgress = registry.gauge("gauge.apartment.rent.progress", Tags.of("object_type", "apartment", "rent_process_state", "ongoing"), new AtomicInteger(0));
+		this.rentTimer = Timer.builder("timer.apartment.rent").publishPercentileHistogram().register(registry);
+		this.random = new Random();
+	}
 
-    @ApiOperation(value = "Reserves an apartment")
-    @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "Apartment successfully reserved.")
-    })
-    @PostMapping(path = "/reserve")
-    @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<ApartmentResource> reserveApartment(@RequestBody ApartmentResource resource) {
-        if (resource.getApartmentId() == 2l) {
-            throw new ApartmentNotFoundException("No apartment found");
-        }
-        startRentCounter.increment();
-        rentProgress.incrementAndGet();
-        return new ResponseEntity<>(resource, HttpStatus.CREATED);
-    }
+	@ApiOperation(value = "Reserves an apartment")
+	@ApiResponses(value = {
+			@ApiResponse(code = 201, message = "Apartment successfully reserved.")
+	})
+	@PostMapping(path = "/reserve")
+	@ResponseStatus(HttpStatus.CREATED)
+	public ResponseEntity<ApartmentResource> reserveApartment(@RequestBody ApartmentResource resource) {
+		if (resource.getApartmentId().equals("6226560e-2e9a-4dad-8854-f996ed47e250")) {
+			throw new ApartmentNotFoundException("No apartment found");
+		}
+		startRentCounter.increment();
+		rentProgress.incrementAndGet();
+		return new ResponseEntity<>(resource, HttpStatus.CREATED);
+	}
 
-    @ApiOperation(value = "Confirms an apartment reservation")
-    @PostMapping(path = "/confirm")
-    @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<ApartmentResource> rentApartment(@RequestBody ApartmentResource resource) {
-        if (resource.getApartmentId() == 2l) {
-            throw new ApartmentNotFoundException("No apartment found");
-        }
-        rentProgress.decrementAndGet();
-        rentSuccessCounter.increment();
-        return new ResponseEntity<>(resource, HttpStatus.CREATED);
-    }
+	@ApiOperation(value = "Confirms an apartment reservation")
+	@PostMapping(path = "/confirm")
+	@ResponseStatus(HttpStatus.CREATED)
+	public ResponseEntity<ApartmentResource> rentApartment(@RequestBody ApartmentResource resource) {
+		if (resource.getApartmentId().equals("6226560e-2e9a-4dad-8854-f996ed47e250")) {
+			throw new ApartmentNotFoundException("No apartment found");
+		}
+		rentProgress.decrementAndGet();
+		rentSuccessCounter.increment();
+		return new ResponseEntity<>(resource, HttpStatus.CREATED);
+	}
 
 
-    @ApiOperation(value = "Cancels an apartment reservation or an rent")
-    @PostMapping(path = "/cancel")
-    @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<ApartmentResource> cancelRentApartment(@RequestBody ApartmentResource resource) {
-        if (resource.getApartmentId() == 2l) {
-            throw new ApartmentNotFoundException("No apartment found");
-        }
-        cancelCounter.increment();
-        rentProgress.decrementAndGet();
-        return new ResponseEntity<>(resource, HttpStatus.CREATED);
-    }
+	@ApiOperation(value = "Cancels an apartment reservation or an rent")
+	@PostMapping(path = "/cancel")
+	@ResponseStatus(HttpStatus.CREATED)
+	public ResponseEntity<ApartmentResource> cancelRentApartment(@RequestBody ApartmentResource resource) {
+		if (resource.getApartmentId().equals("6226560e-2e9a-4dad-8854-f996ed47e250")) {
+			throw new ApartmentNotFoundException("No apartment found");
+		}
+		cancelCounter.increment();
+		rentProgress.decrementAndGet();
+		return new ResponseEntity<>(resource, HttpStatus.CREATED);
+	}
 
     /*@GetMapping("/delay/{delayInSeconds}")
     public ResponseEntity<String> cancelRentApartmentWithDelay(@PathVariable Long delayInSeconds) {
