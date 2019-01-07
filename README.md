@@ -68,7 +68,7 @@ docker-compose up -d --no-deps --build grafana
 
 * Ability to create new apartments. (inmemory persistence)
 * Timer Meter 
-* Latency via Chaos Monkey
+* Chaos Engineering via Chaos Monkey by codecentric
 * Spring Integration tests
 * Build and test with Travis-CI
 * Spring Boot Dev Tools
