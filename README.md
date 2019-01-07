@@ -66,8 +66,6 @@ docker-compose up -d --no-deps --build grafana
 
 # TODO
 
-* Frontend implementation with vue.js
-* Swagger (OpenApi)
 * Ability to create new apartments. (inmemory persistence)
 * Timer Meter 
 * Latency via Chaos Monkey
