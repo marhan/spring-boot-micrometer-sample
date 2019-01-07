@@ -26,7 +26,7 @@ public class Swagger2Config {
     private ApiInfo apiEndPointsInfo() {
         return new ApiInfoBuilder().title("Micrometer sample REST API")
                 .description("Sample for Spring Boot with Micrometer")
-                .contact(new Contact("Markus Hanses", "markushanses.de", "hanses.markus@gmail.com"))
+                .contact(new Contact("Markus Hanses", "http://markushanses.de", "hanses.markus@gmail.com"))
                 .license("MIT")
                 .licenseUrl("https://github.com/marhan/spring-boot-micrometer-sample/blob/master/LICENSE")
                 .version("1.0.0")
