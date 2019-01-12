@@ -9,7 +9,6 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class MetricConfiguration {
 
-
 	@Bean
 	public MeterBinder processMemoryMetrics() {
 		return new ProcessMemoryMetrics();

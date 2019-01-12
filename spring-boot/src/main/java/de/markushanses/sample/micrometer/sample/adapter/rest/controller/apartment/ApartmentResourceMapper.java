@@ -12,12 +12,12 @@ import org.springframework.stereotype.Component;
 public class ApartmentResourceMapper {
 
 	List<ApartmentResource> mapApartmentsToResources(List<Apartment> apartmentList) {
-		return apartmentList.stream().map(this::mapToResource).collect(Collectors.toList());
+		return apartmentList.stream().map(this::mapApartmentToResource).collect(Collectors.toList());
 	}
 
-	private ApartmentResource mapToResource(Apartment apartment) {
+	ApartmentResource mapApartmentToResource(Apartment apartment) {
 		ApartmentResource apartmentResource = new ApartmentResource();
-		apartmentResource.setApartmentId(apartment.getApartmentId().toString());
+		apartmentResource.setApartmentId(apartment.getApartmentId());
 		apartmentResource.setCity(apartment.getCity());
 		apartmentResource.setStatus(mapToResourceStatus(apartment.getStatus()));
 		return apartmentResource;
