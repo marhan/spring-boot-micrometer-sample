@@ -4,7 +4,8 @@ volumes:
   prometheus_data: {}
   grafana_data: {}
   elasticsearch_data: {}
-  kibana_data: {}
+
+  springboot_data: {}
 
 networks:
   monitoring:
@@ -50,6 +51,8 @@ services:
     depends_on:
       - elasticsearch
     image: springboot-micrometer
+    volumes:
+      - ./elastic/kibana/kibana.yml/:/usr/share/kibana/config/kibana.yml:ro
     ports:
       - 8090:8080    
     environment:

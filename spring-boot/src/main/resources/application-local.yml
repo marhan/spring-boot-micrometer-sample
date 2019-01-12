@@ -1,2 +1,10 @@
 server:
   port: 8082
+
+spring:
+  application:
+    name: springboot-micrometer-sample (local)
+  datasource:
+    url: jdbc:h2:~/h2-data/micrometerDB;LOCK_TIMEOUT=10000;DB_CLOSE_ON_EXIT=FALSE;MVCC=TRUE;AUTO_SERVER=TRUE
+    username: micrometer
+    password: micrometer
