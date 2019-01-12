@@ -58,11 +58,10 @@ public class ApartmentRentController {
     @PostMapping(path = "/reserve")
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<ApartmentResource> reserveApartment(@RequestBody ApartmentResource inputResource) {
-        if (inputResource.getApartmentId().equals(UUID.fromString("6226560e-2e9a-4dad-8854-f996ed47e250"))) {
-            throw new ApartmentNotFoundException("No apartment found");
-        }
-
         Apartment apartment = apartmentRepository.findByApartmentId(inputResource.getApartmentId());
+        apartment.reserveApartment();
+        apartment = apartmentRepository.save(apartment);
+
         ApartmentResource outputResource = apartmentResourceMapper.mapApartmentToResource(apartment);
 
         startRentCounter.increment();

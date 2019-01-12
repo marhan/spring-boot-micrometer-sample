@@ -30,4 +30,7 @@ public class Apartment {
 	@Enumerated(EnumType.STRING)
 	private ApartmentStatus status;
 
+	public void reserveApartment() {
+		setStatus(ApartmentStatus.reserved);
+	}
 }
