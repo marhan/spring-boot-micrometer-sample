@@ -1,6 +1,7 @@
-package de.markushanses.sample.micrometer.sample.domain;
+package de.markushanses.sample.micrometer.sample.domain.apartment;
 
-import java.util.UUID;
+import lombok.Data;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -8,8 +9,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
-
-import lombok.Data;
+import java.util.UUID;
 
 @Entity
 @Table(name = "apartment")

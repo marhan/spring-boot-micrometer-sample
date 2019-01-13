@@ -1,12 +1,12 @@
 package de.markushanses.sample.micrometer.sample.adapter.rest.controller.apartment;
 
+import de.markushanses.sample.micrometer.sample.adapter.rest.controller.apartment.ApartmentResource.Status;
+import de.markushanses.sample.micrometer.sample.domain.apartment.Apartment;
+import de.markushanses.sample.micrometer.sample.domain.apartment.ApartmentStatus;
+import org.springframework.stereotype.Component;
+
 import java.util.List;
 import java.util.stream.Collectors;
-
-import de.markushanses.sample.micrometer.sample.adapter.rest.controller.apartment.ApartmentResource.Status;
-import de.markushanses.sample.micrometer.sample.domain.Apartment;
-import de.markushanses.sample.micrometer.sample.domain.ApartmentStatus;
-import org.springframework.stereotype.Component;
 
 @Component
 public class ApartmentResourceMapper {

@@ -1,7 +1,8 @@
 package de.markushanses.sample.micrometer.sample.adapter.rest.controller.apartment;
 
-import de.markushanses.sample.micrometer.sample.domain.Apartment;
-import de.markushanses.sample.micrometer.sample.domain.ApartmentRepository;
+import de.markushanses.sample.micrometer.sample.adapter.rest.exception.ApartmentNotFoundException;
+import de.markushanses.sample.micrometer.sample.domain.apartment.Apartment;
+import de.markushanses.sample.micrometer.sample.domain.apartment.ApartmentService;
 import io.micrometer.core.instrument.Counter;
 import io.micrometer.core.instrument.MeterRegistry;
 import io.micrometer.core.instrument.Tags;
@@ -36,17 +37,17 @@ public class ApartmentRentController {
     private final Timer rentTimer;
     private final Random random;
 
-    private final ApartmentRepository apartmentRepository;
+    private final ApartmentService apartmentService;
     private final ApartmentResourceMapper apartmentResourceMapper;
 
     @Autowired
-    public ApartmentRentController(MeterRegistry registry, ApartmentRepository apartmentRepository, ApartmentResourceMapper apartmentResourceMapper) {
+    public ApartmentRentController(MeterRegistry registry, ApartmentService apartmentService, ApartmentResourceMapper apartmentResourceMapper) {
         this.startRentCounter = registry.counter("counter.apartment.rent.start", "object_type", "apartment", "rent_process_state", "started");
         this.rentSuccessCounter = registry.counter("counter.apartment.rent.success", "object_type", "apartment", "rent_process_state", "success");
         this.cancelCounter = registry.counter("counter.apartment.rent.cancel", "object_type", "apartment", "rent_process_state", "aborted");
         this.rentProgress = registry.gauge("gauge.apartment.rent.progress", Tags.of("object_type", "apartment", "rent_process_state", "ongoing"), new AtomicInteger(0));
         this.rentTimer = Timer.builder("timer.apartment.rent").publishPercentileHistogram().register(registry);
-        this.apartmentRepository = apartmentRepository;
+        this.apartmentService = apartmentService;
         this.apartmentResourceMapper = apartmentResourceMapper;
         this.random = new Random();
     }
@@ -57,15 +58,13 @@ public class ApartmentRentController {
     })
     @PostMapping(path = "/reserve")
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<ApartmentResource> reserveApartment(@RequestBody ApartmentResource inputResource) {
-        Apartment apartment = apartmentRepository.findByApartmentId(inputResource.getApartmentId());
-        apartment.reserveApartment();
-        apartment = apartmentRepository.save(apartment);
-
+    public ResponseEntity<ApartmentResource> reserveApartment(@RequestBody ApartmentReserveResource reserveResource) {
+        Apartment apartment = apartmentService.reserveApartment(reserveResource.getApartmentId());
         ApartmentResource outputResource = apartmentResourceMapper.mapApartmentToResource(apartment);
 
         startRentCounter.increment();
         rentProgress.incrementAndGet();
+
         return new ResponseEntity<>(outputResource, HttpStatus.CREATED);
     }
 
