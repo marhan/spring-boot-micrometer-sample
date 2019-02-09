@@ -32,9 +32,7 @@
                  :outlined="outlined">
             <template slot="show_details" slot-scope="row">
                 <!-- we use @click.stop here to prevent emitting of a 'row-clicked' event  -->
-                <b-button size="sm" @click.stop="row.toggleDetails" class="mr-2">
-                    {{ row.detailsShowing ? 'Hide' : 'Show'}} Actions
-                </b-button>
+                <b-button size="sm" @click.stop="row.toggleDetails" class="mr-2" :to="'/apartment/123'"></b-button>
             </template>
             <template slot="row-details" slot-scope="row">
                 <b-card>
@@ -67,7 +65,7 @@
 
     export default {
 
-        name: 'BusinessCases',
+        name: 'Apartments',
 
         data() {
             return {
