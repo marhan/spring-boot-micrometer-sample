@@ -21,7 +21,6 @@ import java.util.UUID;
 @RestController
 @Api(value = "Apartment management endpoint", description = "Operation for apartment lifecycle management")
 @CrossOrigin(origins = "*", allowedHeaders = "*")
-
 public class ApartmentController {
 
     private final ApartmentRepository apartmentRepository;
