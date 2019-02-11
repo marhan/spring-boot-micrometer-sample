@@ -1,6 +1,47 @@
 <template>
     <b-container>
-        <div style="margin-top: 2rem; padding-bottom: 1rem;"><h1>{{ apartment }}</h1></div>
+        <div style="margin-top: 2rem; padding-bottom: 1rem;"><h1>Apartment</h1></div>
+
+        <div>
+            <b-form @submit="onSubmit" @reset="onReset" v-if="show">
+                <b-form-group id="apartmentIdInputGroup"
+                              label="ApartmentId:"
+                              label-for="apartmentId">
+                    <b-form-input id="apartmentIdInput"
+                                  type="text"
+                                  v-model="apartment.apartmentId"
+                                  required
+                                  readonly
+                                  placeholder="The apartment id">
+                    </b-form-input>
+                </b-form-group>
+                <b-form-group id="apartmentCityInputGroup"
+                              label="ApartmentCity:"
+                              label-for="apartmentCity">
+                    <b-form-input id="apartmentCityInput"
+                                  type="text"
+                                  v-model="apartment.city"
+                                  required
+                                  readonly
+                                  placeholder="The city of the apartment">
+                    </b-form-input>
+                </b-form-group>
+                <b-form-group id="apartmentStatusInputGroup"
+                              label="ApartmentStatus:"
+                              label-for="apartmentStatusInput"
+                              description="Select the desired status of the apartment.">
+                    <b-form-select id="apartmentStatusInput"
+                                   :options="availableStatus"
+                                   required
+                                   v-model="form.status">
+                    </b-form-select>
+                </b-form-group>
+                <b-button-group>
+                    <b-button type="submit" variant="primary">Submit</b-button>
+                    <b-button type="reset" variant="danger">Reset</b-button>
+                </b-button-group>
+            </b-form>
+        </div>
     </b-container>
 </template>
 
@@ -9,7 +50,6 @@
     import Axios from 'axios'
 
     Axios.defaults.baseURL = process.env.VUE_APP_SERVICE_URL + '/api';
-    ;
 
     export default {
 
@@ -17,8 +57,19 @@
 
         data() {
             return {
-                apartment: null,
-                serviceErrors: []
+                apartment: {
+                    apartmentId: '',
+                    city: '',
+                    status: ''
+                },
+                serviceErrors: [],
+                form: {
+                    status: null
+                },
+                availableStatus: [
+                    'free', 'reserved', 'rented'
+                ],
+                show: true
             }
         },
         mounted: function () {
@@ -31,12 +82,27 @@
                 Axios.get("/apartment/" + apartmentId)
                     .then(response => {
                         this.apartment = response.data;
+                        this.form.status = this.apartment.status;
                     })
                     .catch(error => {
                         this.apartment = null;
                         this.serviceErrors.push(error.message);
                     })
+            },
+            onSubmit(evt) {
+                evt.preventDefault();
+                alert(JSON.stringify(this.form));
+            },
+            onReset(evt) {
+                evt.preventDefault();
+                /* Reset our form values */
+                this.callRetrieveApartmentService(this.apartment.apartmentId);
+                /* Trick to reset/clear native browser form validation state */
+                this.show = false;
+                this.$nextTick(() => {
+                    this.show = true
+                });
             }
         }
-    };
+    }
 </script>
