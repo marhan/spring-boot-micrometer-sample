@@ -5,7 +5,7 @@
         <div>
             <b-form @submit="onSubmit" @reset="onReset" v-if="show">
                 <b-form-group id="apartmentIdInputGroup"
-                              label="ApartmentId:"
+                              label="Id:"
                               label-for="apartmentId">
                     <b-form-input id="apartmentIdInput"
                                   type="text"
@@ -16,7 +16,7 @@
                     </b-form-input>
                 </b-form-group>
                 <b-form-group id="apartmentCityInputGroup"
-                              label="ApartmentCity:"
+                              label="City:"
                               label-for="apartmentCity">
                     <b-form-input id="apartmentCityInput"
                                   type="text"
@@ -27,14 +27,21 @@
                     </b-form-input>
                 </b-form-group>
                 <b-form-group id="apartmentStatusInputGroup"
-                              label="ApartmentStatus:"
+                              label="Current state:"
                               label-for="apartmentStatusInput"
-                              description="Select the desired status of the apartment.">
-                    <b-form-select id="apartmentStatusInput"
-                                   :options="availableStatus"
-                                   required
-                                   v-model="form.status">
-                    </b-form-select>
+                              description="This is the current state">
+                    <b-form-input id="apartmentStatusInput"
+                                  type="text"
+                                  required
+                                  readonly
+                                  v-model="apartment.status">
+                    </b-form-input>
+                </b-form-group>
+                <b-form-group label="Your possiblities:">
+                    <b-form-radio-group v-model="selected"
+                                        name="buttons2"
+                                        :options="availableStates">
+                    </b-form-radio-group>
                 </b-form-group>
                 <b-button-group>
                     <b-button type="submit" variant="primary">Submit</b-button>
@@ -53,7 +60,7 @@
 
     export default {
 
-        name: 'Apartment',
+        name: 'ApartmentActions',
 
         data() {
             return {
@@ -63,12 +70,12 @@
                     status: ''
                 },
                 serviceErrors: [],
-                form: {
-                    status: null
-                },
-                availableStatus: [
-                    'free', 'reserved', 'rented'
+                availableStates: [
+                    {text: 'Reserve Apartment', value: 'reserve', disabled: true},
+                    {text: 'Rent Apartment', value: 'rent'},
+                    {text: 'Cancel rent', value: 'cancel'},
                 ],
+                selected: '',
                 show: true
             }
         },
@@ -82,7 +89,6 @@
                 Axios.get("/apartment/" + apartmentId)
                     .then(response => {
                         this.apartment = response.data;
-                        this.form.status = this.apartment.status;
                     })
                     .catch(error => {
                         this.apartment = null;
@@ -91,7 +97,7 @@
             },
             onSubmit(evt) {
                 evt.preventDefault();
-                alert(JSON.stringify(this.form));
+                alert(JSON.stringify(this.selected));
             },
             onReset(evt) {
                 evt.preventDefault();
@@ -102,6 +108,45 @@
                 this.$nextTick(() => {
                     this.show = true
                 });
+            },
+            callReserveApartmentService(apartmentId) {
+                this.apartmentActionName = "Reserve apartment";
+                this.apartmentActionErrors = [];
+
+                Axios.post("/apartment-rent/reserve", {"apartmentId": apartmentId})
+                    .then(response => {
+                        this.apartmentActionSuccessResponse = response.data;
+                    })
+                    .catch(error => {
+                        this.apartmentActionSuccessResponse = null;
+                        this.apartmentActionErrors.push(error.message);
+                    })
+            },
+            callConfirmApartmentRentService(apartmentId) {
+                this.apartmentActionName = "Confirm apartment rent";
+                this.apartmentActionErrors = [];
+
+                Axios.post("/apartment-rent/confirm", {"apartmentId": apartmentId})
+                    .then(response => {
+                        this.apartmentActionSuccessResponse = response.data;
+                    })
+                    .catch(error => {
+                        this.apartmentActionSuccessResponse = null;
+                        this.apartmentActionErrors.push(error.message);
+                    })
+            },
+            callCancelApartmentRentService(apartmentId) {
+                this.apartmentActionName = "Cancel apartment rent";
+                this.apartmentActionErrors = [];
+
+                Axios.post("/apartment-rent/cancel", {"apartmentId": apartmentId})
+                    .then(response => {
+                        this.apartmentActionSuccessResponse = response.data;
+                    })
+                    .catch(error => {
+                        this.apartmentActionSuccessResponse = null;
+                        this.apartmentActionErrors.push(error.message);
+                    })
             }
         }
     }

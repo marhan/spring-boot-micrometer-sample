@@ -1,20 +1,26 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Apartments from '@/components/Apartments'
-import Apartment from '@/components/Apartment'
+import ApartmentEdit from '@/components/ApartmentEdit'
+import ApartmentActions from '@/components/ApartmentActions'
 
 Vue.use(Router)
 
 export default new Router({
     routes: [
         {
-            path: '/apartment/:apartmentId',
-            name: 'apartment',
-            component: Apartment
+            path: '/apartmentEdit/:apartmentId',
+            name: 'ApartmentEdit',
+            component: ApartmentEdit
+        },
+        {
+            path: '/apartmentActions/:apartmentId',
+            name: 'ApartmentActions',
+            component: ApartmentActions
         },
         {
             path: '/apartments',
-            name: 'apartments',
+            name: 'Apartments',
             component: Apartments
         }
     ]

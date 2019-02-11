@@ -28,29 +28,10 @@
                 </b-alert>
             </b-col>
         </b-row>
-        <b-table :fields="apartmentsFields" :items="apartments" style="margin-top: 1rem; padding-bottom: 1rem;" striped hover :bordered="bordered"
-                 :outlined="outlined">
-            <template slot="show_details" slot-scope="row">
-                <!-- we use @click.stop here to prevent emitting of a 'row-clicked' event  -->
-                <b-button size="sm" @click.stop="row.toggleDetails" class="mr-2" :to="'/apartment/' + row.item.apartmentId"></b-button>
-            </template>
-            <template slot="row-details" slot-scope="row">
-                <b-card>
-                    <b-row>
-                        <b-col>
-                            <b-button @click="callReserveApartmentService(row.item.apartmentId)" variant="outline-primary">Reserve an apartment
-                            </b-button>
-                        </b-col>
-                        <b-col>
-                            <b-button @click="callConfirmApartmentRentService(row.item.apartmentId)" variant="outline-success">Confirm apartment rent
-                            </b-button>
-                        </b-col>
-                        <b-col>
-                            <b-button @click="callCancelApartmentRentService(row.item.apartmentId)" variant="outline-warning">Cancel apartment rent
-                            </b-button>
-                        </b-col>
-                    </b-row>
-                </b-card>
+        <b-table :fields="apartmentsFields" :items="apartments" style="margin-top: 1rem; padding-bottom: 1rem;" striped hover :bordered="bordered" :outlined="outlined">
+            <template slot="actions" slot-scope="row">
+                <b-button @click.stop="row.toggleDetails" class="mr-2" :to="'/apartmentEdit/' + row.item.apartmentId" variant="info">Edit</b-button>
+                <b-button @click.stop="row.toggleDetails" class="mr-2" :to="'/apartmentActions/' + row.item.apartmentId" variant="info">Reservation</b-button>
             </template>
         </b-table>
     </b-container>
@@ -69,7 +50,7 @@
 
         data() {
             return {
-                apartmentsFields: ['apartmentId', 'city', 'status', 'show_details'],
+                apartmentsFields: ['apartmentId', 'city', 'status', 'actions'],
                 apartments: [],
                 apartmentErrors: [],
                 apartmentActionName: null,
