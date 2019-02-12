@@ -4,6 +4,11 @@
         <div>
             <b-row>
                 <b-col>
+                    <b-alert :show="serviceErrors.length <= 0 && apartmentUpdateSuccess !== null" variant="success">
+                        <h4>Apartment Update</h4>
+                        <hr>
+                        <p class="mb-0">{{ apartmentUpdateSuccess }}</p>
+                    </b-alert>
                     <b-alert :show="serviceErrors.length > 0"
                              v-for="error in serviceErrors" :key="error"
                              variant="danger">
@@ -92,7 +97,8 @@
                 availableStatus: [
                     'free', 'reserved', 'rented'
                 ],
-                show: true
+                show: true,
+                apartmentUpdateSuccess: null,
             }
         },
         mounted: function () {
@@ -137,8 +143,10 @@
                     })
                     .then(response => {
                         this.apartment = response.data;
+                        this.apartmentUpdateSuccess = "Apartment updated successfully.";
                     })
                     .catch(error => {
+                        this.apartmentUpdateSuccess = null;
                         this.serviceErrors.push(error.message);
                     })
             }

@@ -86,14 +86,4 @@ public class ApartmentRentController {
 
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
-
-    /*@GetMapping("/delay/{delayInSeconds}")
-    public ResponseEntity<String> cancelRentApartmentWithDelay(@PathVariable Long delayInSeconds) {
-        rentTimer.record(simulatedLatency(delayInSeconds), TimeUnit.SECONDS);
-        return new ResponseEntity<>("Apartment delay ID: " + Clock.systemDefaultZone().millis(), HttpStatus.OK);
-    }
-
-    private long simulatedLatency(long center) {
-        return (long) (random.nextGaussian() * 10) + center;
-    }*/
 }
