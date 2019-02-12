@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Apartments from '@/components/Apartments'
 import ApartmentEdit from '@/components/ApartmentEdit'
-import ApartmentActions from '@/components/ApartmentActions'
+import ApartmentRent from '@/components/ApartmentRent'
 
 Vue.use(Router)
 
@@ -14,9 +14,9 @@ export default new Router({
             component: ApartmentEdit
         },
         {
-            path: '/apartmentActions/:apartmentId',
-            name: 'ApartmentActions',
-            component: ApartmentActions
+            path: '/apartmentRent/:apartmentId',
+            name: 'ApartmentRent',
+            component: ApartmentRent
         },
         {
             path: '/apartments',

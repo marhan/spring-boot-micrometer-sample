@@ -1,6 +1,6 @@
 <template>
     <b-container>
-        <div style="margin-top: 2rem; padding-bottom: 1rem;"><h1>Apartment</h1></div>
+        <div style="margin-top: 2rem; padding-bottom: 1rem;"><h1>Apartment edit</h1></div>
         <div>
             <b-row>
                 <b-col>

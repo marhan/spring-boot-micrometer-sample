@@ -31,7 +31,7 @@
         <b-table :fields="apartmentsFields" :items="apartments" style="margin-top: 1rem; padding-bottom: 1rem;" striped hover :bordered="bordered" :outlined="outlined">
             <template slot="actions" slot-scope="row">
                 <b-button @click.stop="row.toggleDetails" class="mr-2" :to="'/apartmentEdit/' + row.item.apartmentId" variant="info">Edit</b-button>
-                <b-button @click.stop="row.toggleDetails" class="mr-2" :to="'/apartmentActions/' + row.item.apartmentId" variant="info">Reservation</b-button>
+                <b-button @click.stop="row.toggleDetails" class="mr-2" :to="'/apartmentRent/' + row.item.apartmentId" variant="info">Reservation</b-button>
             </template>
         </b-table>
     </b-container>
