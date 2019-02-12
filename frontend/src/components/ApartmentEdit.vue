@@ -5,7 +5,7 @@
             <b-row>
                 <b-col>
                     <b-alert :show="serviceErrors.length <= 0 && apartmentUpdateSuccess !== null" variant="success">
-                        <h4>Apartment Update</h4>
+                        <h4>Update successful</h4>
                         <hr>
                         <p class="mb-0">{{ apartmentUpdateSuccess }}</p>
                     </b-alert>
@@ -132,6 +132,8 @@
                 this.$nextTick(() => {
                     this.show = true
                 });
+                this.apartmentUpdateSuccess = null;
+                this.serviceErrors = [];
             },
             callUpdateApartmentService(apartmentId, form) {
                 this.serviceErrors = [];
@@ -143,7 +145,7 @@
                     })
                     .then(response => {
                         this.apartment = response.data;
-                        this.apartmentUpdateSuccess = "Apartment updated successfully.";
+                        this.apartmentUpdateSuccess = "Apartment updated.";
                     })
                     .catch(error => {
                         this.apartmentUpdateSuccess = null;

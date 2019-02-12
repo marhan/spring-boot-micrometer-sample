@@ -160,6 +160,8 @@
                 });
 
                 this.selected = '';
+                this.apartmentRentSuccess = null;
+                this.serviceErrors = [];
             },
             callReserveApartmentService(apartmentId) {
                 this.serviceErrors = [];
