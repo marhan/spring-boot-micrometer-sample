@@ -71,16 +71,25 @@
                 },
                 serviceErrors: [],
                 availableStates: [
-                    {text: 'Reserve Apartment', value: 'reserve', disabled: true},
-                    {text: 'Rent Apartment', value: 'rent'},
-                    {text: 'Cancel rent', value: 'cancel'},
+                    {text: 'Reserve Apartment', value: 'reserved', disabled: false},
+                    {text: 'Rent Apartment', value: 'rented', disabled: false},
+                    {text: 'Cancel rent', value: 'free', disabled: false},
                 ],
                 selected: '',
                 show: true
             }
         },
         mounted: function () {
-            this.callRetrieveApartmentService(this.$route.params.apartmentId)
+            this.callRetrieveApartmentService(this.$route.params.apartmentId);
+        },
+        updated: function () {
+            for (const availableStatus of this.availableStates) {
+                if (availableStatus.value == this.apartment.status) {
+                    availableStatus.disabled = true;
+                } else {
+                    availableStatus.disabled = false;
+                }
+            }
         },
         methods: {
             callRetrieveApartmentService(apartmentId) {
@@ -98,11 +107,11 @@
             onSubmit(evt) {
                 evt.preventDefault();
 
-                if (this.selected == "cancel") {
+                if (this.selected == "free") {
                     this.callCancelApartmentRentService(this.apartment.apartmentId);
-                } else if (this.selected == "rent") {
+                } else if (this.selected == "rented") {
                     this.callConfirmApartmentRentService(this.apartment.apartmentId);
-                } else if (this.selected == "reserve") {
+                } else if (this.selected == "reserved") {
                     this.callReserveApartmentService(this.apartment.apartmentId);
                 }
 
