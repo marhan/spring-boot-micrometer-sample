@@ -19,7 +19,7 @@
                         <b-dropdown-item :href="appServiceUrl + '/actuator'">All service actuators</b-dropdown-item>
                         <b-dropdown-item :href="appServiceUrl + '/actuator/health'">Health actuator endpoint</b-dropdown-item>
                         <b-dropdown-item :href="appServiceUrl + '/actuator/prometheus'">Prometheus actuator endpoint</b-dropdown-item>
-                        <b-dropdown-item href="#">Swagger UI</b-dropdown-item>
+                        <b-dropdown-item :href="appServiceUrl">Swagger UI</b-dropdown-item>
                     </b-nav-item-dropdown>
 
                     <b-nav-item-dropdown text="Monitoring hyperlinks" right>
