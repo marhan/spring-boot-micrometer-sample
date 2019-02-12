@@ -1,8 +1,18 @@
 <template>
     <b-container>
         <div style="margin-top: 2rem; padding-bottom: 1rem;"><h1>Apartment</h1></div>
-
         <div>
+            <b-row>
+                <b-col>
+                    <b-alert :show="serviceErrors.length > 0"
+                             v-for="error in serviceErrors" :key="error"
+                             variant="danger">
+                        <h4>Could not update apartment!</h4>
+                        <hr>
+                        <p class="mb-0">{{ error }}</p>
+                    </b-alert>
+                </b-col>
+            </b-row>
             <b-form @submit="onSubmit" @reset="onReset" v-if="show">
                 <b-form-group id="apartmentIdInputGroup"
                               label="Id:"
@@ -15,15 +25,27 @@
                                   placeholder="The apartment id">
                     </b-form-input>
                 </b-form-group>
-                <b-form-group id="apartmentCityInputGroup"
-                              label="City:"
-                              label-for="apartmentCity">
-                    <b-form-input id="apartmentCityInput"
-                                  type="text"
-                                  v-model="apartment.city"
-                                  required
-                                  placeholder="The city of the apartment">
-                    </b-form-input>
+                <b-form-group id="apartmentLocationInputGroup"
+                              label="Street / City:"
+                              label-for="apartmentLocation">
+                    <b-row>
+                        <b-col>
+                            <b-form-input id="apartmentStreetInput"
+                                          type="text"
+                                          v-model="form.street"
+                                          required
+                                          placeholder="The street of the apartment">
+                            </b-form-input>
+                        </b-col>
+                        <b-col>
+                            <b-form-input id="apartmentCityInput"
+                                          type="text"
+                                          v-model="form.city"
+                                          required
+                                          placeholder="The city of the apartment">
+                            </b-form-input>
+                        </b-col>
+                    </b-row>
                 </b-form-group>
                 <b-form-group id="apartmentStatusInputGroup"
                               label="Status:"
@@ -32,7 +54,7 @@
                                   type="text"
                                   required
                                   readonly
-                                  v-model="form.status">
+                                  v-model="apartment.status">
                     </b-form-input>
                 </b-form-group>
                 <b-button-group>
@@ -58,12 +80,14 @@
             return {
                 apartment: {
                     apartmentId: '',
+                    street: '',
                     city: '',
                     status: ''
                 },
                 serviceErrors: [],
                 form: {
-                    status: null
+                    street: '',
+                    city: ''
                 },
                 availableStatus: [
                     'free', 'reserved', 'rented'
@@ -81,7 +105,8 @@
                 Axios.get("/apartment/" + apartmentId)
                     .then(response => {
                         this.apartment = response.data;
-                        this.form.status = this.apartment.status;
+                        this.form.street = this.apartment.street;
+                        this.form.city = this.apartment.city;
                     })
                     .catch(error => {
                         this.apartment = null;
@@ -90,7 +115,7 @@
             },
             onSubmit(evt) {
                 evt.preventDefault();
-                alert(JSON.stringify(this.form));
+                this.callUpdateApartmentService(this.apartment.apartmentId, this.form);
             },
             onReset(evt) {
                 evt.preventDefault();
@@ -101,6 +126,21 @@
                 this.$nextTick(() => {
                     this.show = true
                 });
+            },
+            callUpdateApartmentService(apartmentId, form) {
+                this.serviceErrors = [];
+
+                Axios.put("/apartment/" + apartmentId,
+                    {
+                        "street": form.street,
+                        "city": form.city
+                    })
+                    .then(response => {
+                        this.apartment = response.data;
+                    })
+                    .catch(error => {
+                        this.serviceErrors.push(error.message);
+                    })
             }
         }
     }

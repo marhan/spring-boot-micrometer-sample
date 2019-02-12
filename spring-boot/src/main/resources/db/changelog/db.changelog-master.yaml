@@ -25,6 +25,11 @@ databaseChangeLog:
                   constraints:
                     nullable: false
               - column:
+                  name: street
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
                   name: status
                   type: varchar(50)
                   constraints:
@@ -43,6 +48,9 @@ databaseChangeLog:
                   name: city
                   value: Hamburg
               - column:
+                  name: street
+                  value: Helmholtzstraße 2
+              - column:
                   name: status
                   value: free
         - insert:
@@ -54,6 +62,9 @@ databaseChangeLog:
               - column:
                   name: city
                   value: Berlin
+              - column:
+                  name: street
+                  value: Westarpstraße 3
               - column:
                   name: status
                   value: free

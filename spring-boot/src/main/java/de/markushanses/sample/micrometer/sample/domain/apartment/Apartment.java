@@ -26,6 +26,9 @@ public class Apartment {
     @Column(name = "city")
     private String city;
 
+    @Column(name = "street")
+    private String street;
+
     @Column(name = "status")
     @Enumerated(EnumType.STRING)
     private ApartmentStatus status;

@@ -19,6 +19,7 @@ public class ApartmentResourceMapper {
 		ApartmentResource apartmentResource = new ApartmentResource();
 		apartmentResource.setApartmentId(apartment.getApartmentId());
 		apartmentResource.setCity(apartment.getCity());
+		apartmentResource.setStreet(apartment.getStreet());
 		apartmentResource.setStatus(mapToResourceStatus(apartment.getStatus()));
 		return apartmentResource;
 	}

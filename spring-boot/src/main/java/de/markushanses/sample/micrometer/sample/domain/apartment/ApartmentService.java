@@ -38,4 +38,19 @@ public class ApartmentService {
         apartment.cancel();
         apartmentRepository.save(apartment);
     }
+
+    public List<Apartment> findAll() {
+        return apartmentRepository.findAll();
+    }
+
+    public Apartment findByApartmentId(UUID apartmentId) {
+        return apartmentRepository.findByApartmentId(apartmentId);
+    }
+
+    public Apartment update(UUID apartmentId, String street, String city) {
+        Apartment apartment = apartmentRepository.findByApartmentId(apartmentId);
+        apartment.setStreet(street);
+        apartment.setCity(city);
+        return apartmentRepository.save(apartment);
+    }
 }

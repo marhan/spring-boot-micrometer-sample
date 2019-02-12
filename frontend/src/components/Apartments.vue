@@ -3,8 +3,8 @@
         <div style="margin-top: 2rem; padding-bottom: 1rem;"><h1>Apartments</h1></div>
         <b-row>
             <b-col>
-                <b-alert :show="apartmentErrors.length > 0"
-                         v-for="error in apartmentErrors" :key="error"
+                <b-alert :show="serviceErrors.length > 0"
+                         v-for="error in serviceErrors" :key="error"
                          variant="danger">
                     <h4>Could not retrieve apartment list!</h4>
                     <hr>
@@ -50,9 +50,9 @@
 
         data() {
             return {
-                apartmentsFields: ['apartmentId', 'city', 'status', 'actions'],
+                apartmentsFields: ['apartmentId', 'street', 'city', 'status', 'actions'],
                 apartments: [],
-                apartmentErrors: [],
+                serviceErrors: [],
                 apartmentActionName: null,
                 apartmentActionErrors: [],
                 apartmentActionSuccessResponse: null,
@@ -66,7 +66,7 @@
         methods: {
             callRetrieveApartmentService() {
                 this.apartmentActionName = "Retrieve apartments";
-                this.apartmentErrors = [];
+                this.serviceErrors = [];
 
                 Axios.get("/apartment")
                     .then(response => {
@@ -77,7 +77,7 @@
                     .catch(error => {
                         this.apartments = [];
                         this.apartmentActionSuccessResponse = null;
-                        this.apartmentErrors.push(error.message);
+                        this.serviceErrors.push(error.message);
                     })
             },
             callReserveApartmentService(apartmentId) {

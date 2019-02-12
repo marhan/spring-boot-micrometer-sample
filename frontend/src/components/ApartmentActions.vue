@@ -15,16 +15,29 @@
                                   placeholder="The apartment id">
                     </b-form-input>
                 </b-form-group>
-                <b-form-group id="apartmentCityInputGroup"
-                              label="City:"
+                <b-form-group id="apartmentLocationInputGroup"
+                              label="Street / City:"
                               label-for="apartmentCity">
-                    <b-form-input id="apartmentCityInput"
-                                  type="text"
-                                  v-model="apartment.city"
-                                  required
-                                  readonly
-                                  placeholder="The city of the apartment">
-                    </b-form-input>
+                    <b-row>
+                        <b-col>
+                            <b-form-input id="apartmentStreetInput"
+                                          type="text"
+                                          v-model="apartment.street"
+                                          required
+                                          readonly
+                                          placeholder="The street of the apartment">
+                            </b-form-input>
+                        </b-col>
+                        <b-col>
+                            <b-form-input id="apartmentCityInput"
+                                          type="text"
+                                          v-model="apartment.city"
+                                          required
+                                          readonly
+                                          placeholder="The city of the apartment">
+                            </b-form-input>
+                        </b-col>
+                    </b-row>
                 </b-form-group>
                 <b-form-group id="apartmentStatusInputGroup"
                               label="Current state:"
@@ -67,6 +80,7 @@
                 apartment: {
                     apartmentId: '',
                     city: '',
+                    street: '',
                     status: ''
                 },
                 serviceErrors: [],
