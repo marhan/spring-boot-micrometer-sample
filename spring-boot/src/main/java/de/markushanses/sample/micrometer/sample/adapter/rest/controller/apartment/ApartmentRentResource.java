@@ -9,7 +9,7 @@ import java.util.UUID;
 
 @Data
 @ApiModel(description = "Reservation for an apartment.")
-class ApartmentReserveResource implements Serializable {
+class ApartmentRentResource implements Serializable {
 
     @ApiModelProperty(notes = "The apartment ID.")
     private UUID apartmentId;

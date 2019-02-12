@@ -97,17 +97,30 @@
             },
             onSubmit(evt) {
                 evt.preventDefault();
-                alert(JSON.stringify(this.selected));
+
+                if (this.selected == "cancel") {
+                    this.callCancelApartmentRentService(this.apartment.apartmentId);
+                } else if (this.selected == "rent") {
+                    this.callConfirmApartmentRentService(this.apartment.apartmentId);
+                } else if (this.selected == "reserve") {
+                    this.callReserveApartmentService(this.apartment.apartmentId);
+                }
+
+                this.callRetrieveApartmentService(this.apartment.apartmentId);
+
             },
             onReset(evt) {
                 evt.preventDefault();
-                /* Reset our form values */
+
                 this.callRetrieveApartmentService(this.apartment.apartmentId);
+
                 /* Trick to reset/clear native browser form validation state */
                 this.show = false;
                 this.$nextTick(() => {
                     this.show = true
                 });
+
+                this.selected = '';
             },
             callReserveApartmentService(apartmentId) {
                 this.apartmentActionName = "Reserve apartment";

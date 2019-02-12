@@ -20,11 +20,22 @@ public class ApartmentService {
         return apartmentRepository.findAll();
     }
 
-    public Apartment reserveApartment(UUID apartmentId) {
+    public void reserveApartment(UUID apartmentId) {
         Apartment apartment = apartmentRepository.findByApartmentId(apartmentId);
-        apartment.reserveApartment();
-        return apartmentRepository.save(apartment);
+        apartment.reserve();
+        apartmentRepository.save(apartment);
     }
 
 
+    public void rentApartment(UUID apartmentId) {
+        Apartment apartment = apartmentRepository.findByApartmentId(apartmentId);
+        apartment.rent();
+        apartmentRepository.save(apartment);
+    }
+
+    public void cancelApartment(UUID apartmentId) {
+        Apartment apartment = apartmentRepository.findByApartmentId(apartmentId);
+        apartment.cancel();
+        apartmentRepository.save(apartment);
+    }
 }

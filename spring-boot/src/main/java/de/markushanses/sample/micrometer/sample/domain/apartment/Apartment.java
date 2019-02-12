@@ -16,21 +16,29 @@ import java.util.UUID;
 @Data
 public class Apartment {
 
-	@Id
-	@GeneratedValue
-	private Integer id;
+    @Id
+    @GeneratedValue
+    private Integer id;
 
-	@Column(name = "apartmentId")
-	private UUID apartmentId;
+    @Column(name = "apartmentId")
+    private UUID apartmentId;
 
-	@Column(name = "city")
-	private String city;
+    @Column(name = "city")
+    private String city;
 
-	@Column(name = "status")
-	@Enumerated(EnumType.STRING)
-	private ApartmentStatus status;
+    @Column(name = "status")
+    @Enumerated(EnumType.STRING)
+    private ApartmentStatus status;
 
-	public void reserveApartment() {
-		setStatus(ApartmentStatus.reserved);
-	}
+    public void reserve() {
+        setStatus(ApartmentStatus.reserved);
+    }
+
+    public void rent() {
+        setStatus(ApartmentStatus.rented);
+    }
+
+    public void cancel() {
+        setStatus(ApartmentStatus.free);
+    }
 }
