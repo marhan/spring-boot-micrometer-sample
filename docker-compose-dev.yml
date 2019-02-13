@@ -1,0 +1,69 @@
+version: '3.1'
+
+volumes:
+  prometheus_data: {}
+  grafana_data: {}
+  elasticsearch_data: {}
+
+networks:
+  monitoring:
+    driver: bridge
+
+services:
+
+  springboot:  
+    build:
+      context: ./spring-boot    
+    image: springboot-micrometer
+    volumes:
+      - ./elastic/kibana/kibana.yml/:/usr/share/kibana/config/kibana.yml:ro
+    ports:
+      - 8090:8080    
+    environment:
+      - "SPRING_PROFILES_ACTIVE=docker"
+    networks:
+      - monitoring
+
+  frontend:    
+    build:
+      context: ./frontend
+    depends_on:
+      - springboot
+    image: frontend-micrometer
+    ports:
+      - 8091:8080
+    networks:
+      - monitoring
+
+  prometheus:
+    image: prom/prometheus:v2.1.0
+    volumes:
+      - ./prometheus/prometheus_config:/etc/prometheus/
+      - prometheus_data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/usr/share/prometheus/console_libraries'
+      - '--web.console.templates=/usr/share/prometheus/consoles'
+    ports:
+      - 9090:9090
+    depends_on:
+      - springboot
+    networks:
+      - monitoring
+
+  grafana:
+    image: grafana/grafana
+    depends_on:
+      - prometheus
+    ports:
+      - 3000:3000
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./prometheus/grafana_config/provisioning/:/etc/grafana/provisioning/
+    env_file:
+      - ./prometheus/grafana_config/config.monitoring
+    networks:
+      - monitoring
+
+
