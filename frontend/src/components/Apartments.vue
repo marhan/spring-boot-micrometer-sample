@@ -3,8 +3,8 @@
         <div style="margin-top: 2rem; padding-bottom: 1rem;"><h1>Apartments</h1></div>
         <b-row>
             <b-col>
-                <b-alert :show="apartmentErrors.length > 0"
-                         v-for="error in apartmentErrors" :key="error"
+                <b-alert :show="serviceErrors.length > 0"
+                         v-for="error in serviceErrors" :key="error"
                          variant="danger">
                     <h4>Could not retrieve apartment list!</h4>
                     <hr>
@@ -28,31 +28,10 @@
                 </b-alert>
             </b-col>
         </b-row>
-        <b-table :fields="apartmentsFields" :items="apartments" style="margin-top: 1rem; padding-bottom: 1rem;" striped hover :bordered="bordered"
-                 :outlined="outlined">
-            <template slot="show_details" slot-scope="row">
-                <!-- we use @click.stop here to prevent emitting of a 'row-clicked' event  -->
-                <b-button size="sm" @click.stop="row.toggleDetails" class="mr-2">
-                    {{ row.detailsShowing ? 'Hide' : 'Show'}} Actions
-                </b-button>
-            </template>
-            <template slot="row-details" slot-scope="row">
-                <b-card>
-                    <b-row>
-                        <b-col>
-                            <b-button @click="callReserveApartmentService(row.item.apartmentId)" variant="outline-primary">Reserve an apartment
-                            </b-button>
-                        </b-col>
-                        <b-col>
-                            <b-button @click="callConfirmApartmentRentService(row.item.apartmentId)" variant="outline-success">Confirm apartment rent
-                            </b-button>
-                        </b-col>
-                        <b-col>
-                            <b-button @click="callCancelApartmentRentService(row.item.apartmentId)" variant="outline-warning">Cancel apartment rent
-                            </b-button>
-                        </b-col>
-                    </b-row>
-                </b-card>
+        <b-table :fields="apartmentsFields" :items="apartments" style="margin-top: 1rem; padding-bottom: 1rem;" striped hover :bordered="bordered" :outlined="outlined">
+            <template slot="actions" slot-scope="row">
+                <b-button @click.stop="row.toggleDetails" class="mr-2" :to="'/apartmentEdit/' + row.item.apartmentId" variant="info">Edit</b-button>
+                <b-button @click.stop="row.toggleDetails" class="mr-2" :to="'/apartmentRent/' + row.item.apartmentId" variant="info">Reservation</b-button>
             </template>
         </b-table>
     </b-container>
@@ -67,13 +46,13 @@
 
     export default {
 
-        name: 'BusinessCases',
+        name: 'Apartments',
 
         data() {
             return {
-                apartmentsFields: ['apartmentId', 'city', 'status', 'show_details'],
+                apartmentsFields: ['apartmentId', 'street', 'city', 'status', 'actions'],
                 apartments: [],
-                apartmentErrors: [],
+                serviceErrors: [],
                 apartmentActionName: null,
                 apartmentActionErrors: [],
                 apartmentActionSuccessResponse: null,
@@ -87,7 +66,7 @@
         methods: {
             callRetrieveApartmentService() {
                 this.apartmentActionName = "Retrieve apartments";
-                this.apartmentErrors = [];
+                this.serviceErrors = [];
 
                 Axios.get("/apartment")
                     .then(response => {
@@ -98,7 +77,7 @@
                     .catch(error => {
                         this.apartments = [];
                         this.apartmentActionSuccessResponse = null;
-                        this.apartmentErrors.push(error.message);
+                        this.serviceErrors.push(error.message);
                     })
             },
             callReserveApartmentService(apartmentId) {

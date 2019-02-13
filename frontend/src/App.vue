@@ -9,7 +9,7 @@
             <b-collapse is-nav id="nav_collapse">
 
                 <b-navbar-nav>
-                    <b-nav-item :to="{ path: '/' }">Home</b-nav-item>
+                    <b-nav-item :to="{ path: '/apartments' }">Apartments</b-nav-item>
                 </b-navbar-nav>
 
                 <!-- Right aligned nav items -->
@@ -19,7 +19,7 @@
                         <b-dropdown-item :href="appServiceUrl + '/actuator'">All service actuators</b-dropdown-item>
                         <b-dropdown-item :href="appServiceUrl + '/actuator/health'">Health actuator endpoint</b-dropdown-item>
                         <b-dropdown-item :href="appServiceUrl + '/actuator/prometheus'">Prometheus actuator endpoint</b-dropdown-item>
-                        <b-dropdown-item href="#">Swagger UI</b-dropdown-item>
+                        <b-dropdown-item :href="appServiceUrl">Swagger UI</b-dropdown-item>
                     </b-nav-item-dropdown>
 
                     <b-nav-item-dropdown text="Monitoring hyperlinks" right>
@@ -33,7 +33,6 @@
 
             </b-collapse>
         </b-navbar>
-        <!-- navbar-1.vue -->
 
         <router-view/>
 

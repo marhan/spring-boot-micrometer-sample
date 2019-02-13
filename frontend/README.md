@@ -1,4 +1,4 @@
-# Vue.js frontend
+# Frontend realized with [Vue.js](https://vuejs.org/)
 
 ## Requirements 
 

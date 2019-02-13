@@ -1,4 +1,4 @@
-package de.markushanses.sample.micrometer.sample.domain;
+package de.markushanses.sample.micrometer.sample.domain.apartment;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
