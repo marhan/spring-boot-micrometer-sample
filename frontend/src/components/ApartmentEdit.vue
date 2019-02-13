@@ -31,7 +31,7 @@
                     </b-form-input>
                 </b-form-group>
                 <b-form-group id="apartmentLocationInputGroup"
-                              label="Street / City:"
+                              label="Street & City:"
                               label-for="apartmentLocation">
                     <b-row>
                         <b-col>

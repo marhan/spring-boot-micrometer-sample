@@ -31,7 +31,7 @@
                     </b-form-input>
                 </b-form-group>
                 <b-form-group id="apartmentLocationInputGroup"
-                              label="Street / City:"
+                              label="Street & City:"
                               label-for="apartmentCity">
                     <b-row>
                         <b-col>
@@ -55,9 +55,9 @@
                     </b-row>
                 </b-form-group>
                 <b-form-group id="apartmentStatusInputGroup"
-                              label="Current state:"
+                              label="Status:"
                               label-for="apartmentStatusInput"
-                              description="This is the current state">
+                              description="This is the current state of the apartment">
                     <b-form-input id="apartmentStatusInput"
                                   type="text"
                                   required
@@ -65,9 +65,9 @@
                                   v-model="apartment.status">
                     </b-form-input>
                 </b-form-group>
-                <b-form-group label="Your possiblities:">
+                <b-form-group label="Your possibilities:">
                     <b-form-radio-group v-model="selected"
-                                        name="buttons2"
+                                        name="selection"
                                         :options="availableStates">
                     </b-form-radio-group>
                 </b-form-group>
@@ -79,6 +79,7 @@
         </div>
     </b-container>
 </template>
+
 
 <script>
 
@@ -113,15 +114,14 @@
             this.callRetrieveApartmentService(this.$route.params.apartmentId);
         },
         updated: function () {
-            for (const availableStatus of this.availableStates) {
-                if (availableStatus.value == this.apartment.status) {
-                    availableStatus.disabled = true;
-                } else {
-                    availableStatus.disabled = false;
-                }
-            }
+            this.updateAvailableStatesRadioButtons();
         },
         methods: {
+            updateAvailableStatesRadioButtons: function () {
+                for (const availableStatus of this.availableStates) {
+                    availableStatus.disabled = availableStatus.value === this.apartment.status;
+                }
+            },
             callRetrieveApartmentService(apartmentId) {
                 this.serviceErrors = [];
 
@@ -135,17 +135,19 @@
                     })
             },
             onSubmit(evt) {
-                evt.preventDefault();
+                //evt.preventDefault();
 
-                if (this.selected == "free") {
+                if (this.selected === "free") {
                     this.callCancelApartmentRentService(this.apartment.apartmentId);
-                } else if (this.selected == "rented") {
+                } else if (this.selected === "rented") {
                     this.callConfirmApartmentRentService(this.apartment.apartmentId);
-                } else if (this.selected == "reserved") {
+                } else if (this.selected === "reserved") {
                     this.callReserveApartmentService(this.apartment.apartmentId);
                 }
+                this.selected = '';
 
                 this.callRetrieveApartmentService(this.apartment.apartmentId);
+                //this.updateAvailableStatesRadioButtons();
 
             },
             onReset(evt) {
@@ -160,6 +162,7 @@
                 });
 
                 this.selected = '';
+                //this.updateAvailableStatesRadioButtons();
                 this.apartmentRentSuccess = null;
                 this.serviceErrors = [];
             },
@@ -168,7 +171,7 @@
 
                 Axios.post("/apartment-rent/reserve", {"apartmentId": apartmentId})
                     .then(response => {
-                        if (response.status == 201) {
+                        if (response.status === 201) {
                             this.apartmentRentSuccess = "Apartment reserved.";
                         }
                     })
@@ -182,7 +185,7 @@
 
                 Axios.post("/apartment-rent/confirm", {"apartmentId": apartmentId})
                     .then(response => {
-                        if (response.status == 201) {
+                        if (response.status === 201) {
                             this.apartmentRentSuccess = "Apartment rent started.";
                         }
                     })
@@ -196,7 +199,7 @@
 
                 Axios.post("/apartment-rent/cancel", {"apartmentId": apartmentId})
                     .then(response => {
-                        if (response.status == 201) {
+                        if (response.status === 201) {
                             this.apartmentRentSuccess = "Apartment rent cancelled.";
                         }
                     })

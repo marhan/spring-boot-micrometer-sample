@@ -33,7 +33,6 @@
 
             </b-collapse>
         </b-navbar>
-        <!-- navbar-1.vue -->
 
         <router-view/>
 
