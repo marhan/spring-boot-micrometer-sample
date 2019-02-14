@@ -135,7 +135,7 @@
                     })
             },
             onSubmit(evt) {
-                //evt.preventDefault();
+                evt.preventDefault();
 
                 if (this.selected === "free") {
                     this.callCancelApartmentRentService(this.apartment.apartmentId);
@@ -147,7 +147,7 @@
                 this.selected = '';
 
                 this.callRetrieveApartmentService(this.apartment.apartmentId);
-                //this.updateAvailableStatesRadioButtons();
+                this.updateAvailableStatesRadioButtons();
 
             },
             onReset(evt) {
