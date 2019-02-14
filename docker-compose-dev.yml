@@ -15,6 +15,7 @@ services:
     build:
       context: ./spring-boot    
     image: springboot-micrometer
+    restart: always
     volumes:
       - ./elastic/kibana/kibana.yml/:/usr/share/kibana/config/kibana.yml:ro
     ports:
