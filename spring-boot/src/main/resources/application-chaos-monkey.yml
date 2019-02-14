@@ -5,13 +5,11 @@ chaos:
   monkey:
     enabled: true
     assaults:
-      latencyActive: true
-      latencyRangeStart: 1000
-      latencyRangeEnd: 4500
+      latencyActive: false
       level: 1
     watcher:
       component: false
-      restController: true
+      restController: false
       service: false
       repository: false
 
