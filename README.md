@@ -65,6 +65,17 @@ docker-compose up -d --no-deps --build grafana
 docker-compose -f docker-compose-dev.yml up -d --force-recreate
 ```
 
+
+# Endpoints & Services
+
+* [Vue.js Frontend](http://localhost:8091)
+* [Spring Boot Backend](http://localhost:8090)
+* [Spring Boot Actuator](http://localhost:8090/actuator)
+* [Prometheus](http://localhost:9090/targets)
+* [Grafana](http://localhost:3000)
+* [Elastic Search](http://localhost:9200/)
+* [Kibana](http://localhost:5601)
+
 # Further informations
 
 * [Prometheus, Grafana Setup](https://github.com/vegasbrianc/prometheus)
