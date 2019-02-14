@@ -42,6 +42,10 @@ npm run test:unit
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
 
+### Known Issues
+
+* ['vue-cli-service: command not found' while container based build](https://github.com/vuejs/vue-cli/issues/2404)
+
 ## Further informations
 
 * [Bootstrap Vue.js](https://bootstrap-vue.js.org/)
