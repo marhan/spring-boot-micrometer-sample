@@ -59,6 +59,12 @@ docker volume remove spring-boot-micrometer-sample_kibana_data
 docker-compose up -d --no-deps --build grafana
 ```
 
+## Start dev docker-compose
+
+```bash
+docker-compose -f docker-compose-dev.yml up -d --force-recreate
+```
+
 # Further informations
 
 * [Prometheus, Grafana Setup](https://github.com/vegasbrianc/prometheus)

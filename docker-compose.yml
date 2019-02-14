@@ -56,7 +56,7 @@ services:
     ports:
       - 8090:8080    
     environment:
-      - "SPRING_PROFILES_ACTIVE=docker"
+      - "SPRING_PROFILES_ACTIVE=docker,chaos-monkey"
     networks:
       - monitoring
     restart: always

@@ -1,10 +1,11 @@
 ## Build Tool
-
 .gradle
 
 ## IDE
-
 .idea
 
-## Grafana
+## Chaostoolkit
+journal.json
 
+## All
+*.log
