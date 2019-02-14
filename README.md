@@ -66,9 +66,10 @@ docker-compose up -d --no-deps --build grafana
 
 # TODO
 
-* Ability to create new apartments. (inmemory persistence)
+* Chaos Engineering via Chaos Monkey created by codecentric
+* Trigger chaos via Chaos Toolkit
 * Timer Meter 
-* Chaos Engineering via Chaos Monkey by codecentric
+* Ability to create new apartments
 * Spring Integration tests
 * Build and test with Travis-CI
 * Spring Boot Dev Tools
