@@ -55,6 +55,9 @@ dependencies {
     implementation('io.micrometer:micrometer-registry-elastic:1.1.0')
     implementation('io.github.mweirauch:micrometer-jvm-extras:0.1.2') // todo: remove it later
 
+    // chaos engineering
+    implementation('de.codecentric:chaos-monkey-spring-boot:2.0.2')
+
     // dev tools
     runtimeOnly("org.springframework.boot:spring-boot-devtools:${springBootVersion}")
 

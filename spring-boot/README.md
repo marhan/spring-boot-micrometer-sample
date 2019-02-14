@@ -9,7 +9,7 @@
 run locally
 
 ```bash
-./gradlew bootRun --args='--spring.profiles.active=local'
+./gradlew bootRun --args='--spring.profiles.active=local,chaos-monkey'
 ```
 The monitoring systems are not connected, if the app runs locally.   
 
