@@ -16,10 +16,6 @@
                 "tolerance": 200,
                 "provider": {
                     "type": "http",
-                    "timeout": [
-                        100,
-                        100
-                    ],
                     "url": "http://localhost:8090/api/apartment"
                 }
             }
@@ -57,10 +53,19 @@
                 "module": "chaosspring.actions",
                 "type": "python"
             },
-            "pauses": {
-                "after": 15
-            },
             "type": "action"
+        },
+        {
+            "type": "action",
+            "name": "send-request-once",
+            "provider": {
+                "type": "http",
+                "url": "http://localhost:8090/api/apartment"
+            },
+            "pauses": {
+                "after": 30
+            },
+            "background": true
         }
     ],
     "rollbacks": []
