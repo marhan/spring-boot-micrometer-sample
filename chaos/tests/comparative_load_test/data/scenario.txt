@@ -1,0 +1,6 @@
+GET http://xin858943.asv.local:8081/api/project/c43097ba-5089-452f-938d-5ed7799d6539
+GET http://xin858943.asv.local:8090/api/apartment
+POST http://xin858943.asv.local:8090/api/apartment-rent/reserve
+@data/apartment.json
+PUT http://xin858943.asv.local:8081/api/project/c43097ba-5089-452f-938d-5ed7799d6539
+@data/in.json

@@ -1,0 +1,77 @@
+{
+    "version": "1.0.0",
+    "title": "System is resilient to provider's failures",
+    "description": "Can our consumer survive gracefully a provider's failure?",
+    "tags": [
+        "service",
+        "kubernetes",
+        "spring"
+    ],
+    "steady-state-hypothesis": {
+        "title": "Services are all available and healthy",
+        "probes": [
+            {
+                "type": "probe",
+                "name": "service-must-still-respond",
+                "tolerance": 200,
+                "provider": {
+                    "type": "http",
+                    "url": "http://tf-ecs-chat-2029647197.us-east-1.elb.amazonaws.com/api/apartment",
+                    "timeout": [
+                        5,
+                        5
+                    ]
+                }
+            }
+        ]
+    },
+    "method": [
+        {
+            "type": "action",
+            "name": "diasble_chaosmonkey",
+            "provider": {
+                "arguments": {
+                    "base_url": "http://tf-ecs-chat-2029647197.us-east-1.elb.amazonaws.com/actuator"
+                },
+                "func": "diasble_chaosmonkey",
+                "module": "chaosspring.actions",
+                "type": "python"
+            }
+        },
+        {
+            "name": "configure_assaults",
+            "provider": {
+                "arguments": {
+                    "base_url": "http://tf-ecs-chat-2029647197.us-east-1.elb.amazonaws.com/actuator",
+                    "assaults_configuration": {
+                        "level": 1,
+                        "latencyRangeStart": 12000,
+                        "latencyRangeEnd": 5000,
+                        "latencyActive": false,
+                        "exceptionsActive": false,
+                        "killApplicationActive": false,
+                        "restartApplicationActive": false
+                    }
+                },
+                "func": "change_assaults_configuration",
+                "module": "chaosspring.actions",
+                "type": "python"
+            },
+            "type": "action"
+        },
+        {
+            "type": "action",
+            "provider": {
+                "type": "python",
+                "func": "stop_task",
+                "module": "chaosaws.ecs.actions"
+            },
+            "name": "app",
+            "configuration": {
+                "aws_profile_name": "iwhh-playground",
+                "aws_region": "us-east-1"
+            }
+        }
+    ],
+    "rollbacks": []
+}

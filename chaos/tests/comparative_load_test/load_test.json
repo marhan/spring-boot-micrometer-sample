@@ -1,0 +1,53 @@
+{
+    "version": "1.0.0",
+    "title": "System is resilient to provider's failures",
+    "description": "Can our consumer survive gracefully a provider's failure?",
+    "tags": [
+        "service",
+        "kubernetes",
+        "spring"
+    ],
+    "steady-state-hypothesis": {
+        "title": "Services are all available and healthy",
+        "probes": [
+            {
+                "type": "probe",
+                "name": "springboot-must-still-respond",
+                "tolerance": 200,
+                "provider": {
+                    "type": "http",
+                    "url": "http://xin858943.asv.local:8090/api/apartment",
+                    "timeout": [
+                        0.05,
+                        0.05
+                    ]
+                }
+            },
+            {
+                "type": "probe",
+                "name": "vertx-must-still-respond",
+                "tolerance": 200,
+                "provider": {
+                    "type": "http",
+                    "url": "http://xin858943.asv.local:8081",
+                    "timeout": [
+                        0.05,
+                        0.05
+                    ]
+                }
+            }
+        ]
+    },
+    "method": [
+        {
+            "type": "action",
+            "name": "simulate-user-traffic",
+            "provider": {
+                "type": "process",
+                "path": "vegeta",
+                "arguments": "-cpus 2 attack -targets=data/scenario.txt -workers=10 -connections=10000 -rate=1 -timeout=0 -duration=30s -output=result.bin"
+            }
+        }
+    ],
+    "rollbacks": []
+}

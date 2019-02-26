@@ -1,0 +1,72 @@
+{
+    "version": "1.0.0",
+    "title": "System is resilient to provider's failures",
+    "description": "Can our consumer survive gracefully a provider's failure?",
+    "tags": [
+        "service",
+        "kubernetes",
+        "spring"
+    ],
+    "steady-state-hypothesis": {
+        "title": "Services are all available and healthy",
+        "probes": [
+            {
+                "type": "probe",
+                "name": "service-must-still-respond",
+                "tolerance": 200,
+                "provider": {
+                    "type": "http",
+                    "url": "http://localhost:8090/swagger-ui.html"
+                }
+            }
+        ]
+    },
+    "method": [
+        {
+            "type": "action",
+            "name": "enable_chaosmonkey",
+            "provider": {
+                "arguments": {
+                    "base_url": "http://localhost:8090/actuator"
+                },
+                "func": "enable_chaosmonkey",
+                "module": "chaosspring.actions",
+                "type": "python"
+            }
+        },
+        {
+            "name": "configure_assaults",
+            "provider": {
+                "arguments": {
+                    "base_url": "http://localhost:8090/actuator",
+                    "assaults_configuration": {
+                        "level": 1,
+                        "latencyRangeStart": 12000,
+                        "latencyRangeEnd": 5000,
+                        "latencyActive": false,
+                        "exceptionsActive": false,
+                        "killApplicationActive": true,
+                        "restartApplicationActive": false
+                    }
+                },
+                "func": "change_assaults_configuration",
+                "module": "chaosspring.actions",
+                "type": "python"
+            },
+            "type": "action"
+        },
+        {
+            "type": "action",
+            "name": "send-request-once",
+            "provider": {
+                "type": "http",
+                "url": "http://localhost:8090/swagger-ui.html"
+            },
+            "pauses": {
+                "after": 5
+            },
+            "background": true
+        }
+    ],
+    "rollbacks": []
+}
