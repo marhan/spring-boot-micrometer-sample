@@ -62,7 +62,7 @@ docker-compose up -d --no-deps --build grafana
 ## Start dev docker-compose
 
 ```bash
-docker-compose -f docker-compose-dev.yml up -d --force-recreate
+docker-compose -f docker-compose-dev.yml up -d --force-recreate --build
 ```
 
 
@@ -75,6 +75,17 @@ docker-compose -f docker-compose-dev.yml up -d --force-recreate
 * [Grafana](http://localhost:3000)
 * [Elastic Search](http://localhost:9200/)
 * [Kibana](http://localhost:5601)
+
+# Choas Monkey
+
+* [Chaos Toolkit](https://docs.chaostoolkit.org/reference/usage/install/)
+* [Chaos Toolkit Spring](https://docs.chaostoolkit.org/drivers/spring/)
+
+## run experiment
+
+```bash
+chaos run chaos/experiment.json
+```
 
 # Further informations
 
