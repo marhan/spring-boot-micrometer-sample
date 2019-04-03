@@ -1,22 +1,19 @@
-apiVersion: apps/v1beta1 
+apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: spring-boot-deployment
+  name: spring-boot-micrometer-sample-deployment
 spec:
   selector:
     matchLabels:
-      app: spring-boot-app
-  #replicas: 3 
+      app: spring-boot-micrometer-sample
+  replicas: 2
   template: 
     metadata:
       labels:
-        app: spring-boot-app
+        app: spring-boot-micrometer-sample
     spec:
       containers:
-      - name: spring-boot-app
-        image: #your image name here
+      - name: spring-boot-micrometer-sample
+        image: marhan/spring-boot-micrometer-sample:latest
         ports:
         - containerPort: 8080
-          name: server
-        - containerPort: 8081
-          name: management

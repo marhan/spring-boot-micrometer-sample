@@ -1,7 +1,7 @@
 FROM openjdk:11-jdk-slim
 VOLUME /tmp
 MAINTAINER Markus Hanses <hanses.markus@gmail.com>
-ADD build/lib/*.jar app.jar
+ADD build/libs/*.jar app.jar
 
 ENV JAVA_OPTS=""
 ENV SPRING_PROFILE="docker,chaos-monkey"

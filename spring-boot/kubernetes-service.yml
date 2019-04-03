@@ -1,0 +1,13 @@
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: spring-boot-micrometer-sample-service
+spec:
+  ports:
+  - port: 8080
+    targetPort: 8080
+    name: http  
+  selector:
+    app: spring-boot-micrometer-sample
+  type: NodePort
