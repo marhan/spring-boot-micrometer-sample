@@ -12,6 +12,7 @@ buildscript {
 
 plugins {
     id 'net.ltgt.apt' version '0.10'
+    id 'com.google.cloud.tools.jib' version '1.0.2'
 }
 
 apply plugin: 'java'

@@ -1,9 +1,12 @@
 FROM openjdk:11-jdk-slim
-# work workdirectory
-WORKDIR /app
-# copy sources
-COPY . .
-# build application
-RUN ./gradlew build -x test --no-daemon
-EXPOSE 8080
-CMD ["java", "-jar", "build/libs/spring-boot-micrometer-1.jar"]
+VOLUME /tmp
+MAINTAINER Markus Hanses <hanses.markus@gmail.com>
+ADD build/lib/*.jar app.jar
+
+ENV JAVA_OPTS=""
+ENV SPRING_PROFILE="docker,chaos-monkey"
+
+ENTRYPOINT exec java $JAVA_OPTS \
+ -Djava.security.egd=file:/dev/./urandom \
+ -Dspring.profiles.active=$SPRING_PROFILE \
+ -jar app.jar
