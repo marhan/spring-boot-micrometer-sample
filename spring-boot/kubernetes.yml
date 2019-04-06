@@ -1,33 +1,40 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: spring-boot-micrometer-sample-svc
+  name: spring-boot-micrometer-sample
+  labels:
+    service: spring-boot-micrometer-sample
+    project: micrometer-sample
 spec:
   ports:
   - port: 8080
     nodePort: 30000
     name: http  
   selector:
-    app: spring-boot-micrometer-sample
+    component: spring-boot-micrometer-sample
   type: NodePort
 ---
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: spring-boot-micrometer-sample-dpl
+  name: spring-boot-micrometer-sample
 spec:
   selector:
     matchLabels:
-      app: spring-boot-micrometer-sample
+      component: spring-boot-micrometer-sample
   replicas: 1
   template: 
     metadata:
       labels:
-        app: spring-boot-micrometer-sample
+        component: spring-boot-micrometer-sample
+        project: micrometer-sample
     spec:
       containers:
       - name: spring-boot-micrometer-sample
         image: marhan/spring-boot-micrometer-sample:latest
+        env:
+        - name: SPRING_PROFILE
+          value: "kubernetes,chaos-monkey"
         ports:
         - containerPort: 8080
 ---

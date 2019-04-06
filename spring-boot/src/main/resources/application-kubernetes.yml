@@ -1,0 +1,16 @@
+management:
+  metrics:
+    export:
+      elastic:
+        enabled: true
+        host: "http://elasticsearch-micrometer-sample:9200"
+        index: "micrometer-metrics"
+        step: 5s
+        batch-size: 5
+    tags.environment: "docker_on_markus_mac"
+
+spring:
+  datasource:
+    url: jdbc:h2:/app/h2-data/micrometerDB;LOCK_TIMEOUT=10000;DB_CLOSE_ON_EXIT=FALSE;MVCC=TRUE;AUTO_SERVER=TRUE
+    username: micrometer
+    password: micrometer
