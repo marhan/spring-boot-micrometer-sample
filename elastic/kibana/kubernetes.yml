@@ -1,0 +1,44 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: kibana-micrometer-sample
+  labels:
+    service: kibana-micrometer-sample
+    project: micrometer-sample
+spec:
+  type: NodePort
+  selector:
+    run: kibana-micrometer-sample
+  ports:
+  - port: 5601
+    targetPort: 5601
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: kibana-micrometer-sample
+spec:
+  selector:
+    matchLabels:
+      run: kibana-micrometer-sample
+  template:
+    metadata:
+      labels:
+        run: kibana-micrometer-sample
+        project: micrometer-sample
+    spec:
+      containers:
+      - name: kibana
+        image: docker.elastic.co/kibana/kibana-oss:6.5.4
+        env:
+        - name: ELASTICSEARCH_URL
+          value: http://elasticsearch-micrometer-sample:9200
+        - name: SERVER_NAME
+          value: micrometer-kibana
+        - name: SERVER_HOST
+          value: "0"
+        ports:
+        - containerPort: 5601
+          name: http
+          protocol: TCP
+---
