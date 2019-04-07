@@ -29,14 +29,12 @@ spec:
     spec:
       containers:
       - name: kibana
-        image: docker.elastic.co/kibana/kibana-oss:6.5.4
+        image: docker.elastic.co/kibana/kibana-oss:6.7.1
         env:
-        - name: ELASTICSEARCH_URL
-          value: http://elasticsearch-micrometer-sample:9200
+        - name: ELASTICSEARCH_HOSTS
+          value: http://elasticsearch-micrometer-sample
         - name: SERVER_NAME
           value: micrometer-kibana
-        - name: SERVER_HOST
-          value: "0"
         ports:
         - containerPort: 5601
           name: http
