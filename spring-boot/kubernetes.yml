@@ -6,13 +6,14 @@ metadata:
     service: spring-boot-micrometer-sample
     project: micrometer-sample
 spec:
+  type: NodePort
   ports:
   - port: 8080
+    protocol: TCP
     nodePort: 30000
-    name: http  
+    name: restful-api
   selector:
     component: spring-boot-micrometer-sample
-  type: NodePort
 ---
 apiVersion: extensions/v1beta1
 kind: Deployment
