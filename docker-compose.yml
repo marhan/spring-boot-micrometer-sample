@@ -74,7 +74,7 @@ services:
     restart: always
 
   prometheus:
-    image: prom/prometheus:v2.1.0
+    image: prom/prometheus:v2.8.1
     volumes:
       - ./prometheus/prometheus_config:/etc/prometheus/
       - prometheus_data:/prometheus
@@ -92,7 +92,7 @@ services:
     restart: always
 
   grafana:
-    image: grafana/grafana
+    image: grafana/grafana:6.1.1
     depends_on:
       - prometheus
     ports:
